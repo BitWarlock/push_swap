@@ -46,23 +46,48 @@ void	create_stack(int arr[], int size, t_stack **stack)
 	}
 }
 
+// void	display_list(t_stack *stack)
+// {
+// 	t_stack		*tmp;
+// 	int			i;
+//
+// 	i = 1;
+// 	tmp = stack;
+// 	if (!tmp)
+// 		exit(0);
+// 	else
+// 	{
+// 		printf("Stack a: \n\n");
+// 		while (1)
+// 		{
+// 			printf("%d\n", stack->prev->data);
+// 			if (stack->prev == tmp)
+// 				break ;
+// 			stack = stack->prev;
+// 			i++;
+// 		}
+// 	}
+// }
+
 void	display_list(t_stack *stack)
 {
-	t_stack *tmp;
-	int	i;
+	t_stack		*tmp;
+	int			i;
 
-	i = 1;
+	i = stack->size;
 	tmp = stack;
-	if (!tmp)
-		exit(0);
+	if (i == 0)
+		printf("Empty stack\n");
 	else
 	{
 		printf("Stack: \n");
-		while (stack->next != tmp)
+		while (1)
 		{
-			printf("%d: %d.\n", i, stack->data);
+			printf("%0d:\t%d\n", i, stack->data);
+			if (stack->next == tmp)
+				break ;
 			stack = stack->next;
-			i++;
+			i--;
 		}
 	}
 }
@@ -82,19 +107,108 @@ void	free_stack(t_stack **stack)
 	free(*stack);
 }
 
+void	rotate_a(t_stack **a)
+{
+	*a = (*a)->prev;
+}
+
+void	rotate_b(t_stack **b)
+{
+	*b = (*b)->prev;
+}
+
+void	rotate_ab(t_stack **a, t_stack **b)
+{
+	rotate_a(a);
+	rotate_b(b);
+}
+
+void	reverse_ra(t_stack **a)
+{
+	*a = (*a)->next;
+}
+
+void	reverse_rb(t_stack **b)
+{
+	*b = (*b)->next;
+}
+
+void	reverse_rab(t_stack **a, t_stack **b)
+{
+	reverse_ra(a);
+	reverse_rb(b);
+}
+
+void	swap_a(t_stack **a)
+{
+	t_stack	*last;
+	t_stack	*s_last;
+	int		tmp;
+
+	if ((*a)->size < 2)
+		return ;
+	last = (*a)->prev;
+	s_last = (*a)->prev->prev;
+	tmp = last->data;
+	last->data = s_last->data;
+	s_last->data = tmp;
+}
+
+void	swap_b(t_stack **b)
+{
+	t_stack	*last;
+	t_stack	*s_last;
+	int		tmp;
+
+	if ((*b)->size < 2)
+		return ;
+	last = (*b)->prev;
+	s_last = (*b)->prev->prev;
+	tmp = last->data;
+	last->data = s_last->data;
+	s_last->data = tmp;
+}	
+
+void	swap_ab(t_stack **a, t_stack **b)
+{
+	swap_a(a);
+	swap_b(b);
+}
+
+// void	push_b(t_stack **a, t_stack **b)
+// {
+// 	if ((*b)->size == 0)
+// 	{
+// 		*b = new;
+// 		(*b)->next = *b;
+// 		new->prev = *b;
+// 		count = 1;
+// 		(*b)->size = 1;
+// 		new->data = data;
+// 	}
+// }
+
 void	f(void){system("leaks a.out");};
 
 int main(void)
 {
-	atexit(f);
-	int	arr[] = {-123, 52434, 5454, 5345, -765,
-				756, 75, -7657657, 524656, 5346546, 543543, 5346, 0, 534, 2147483647, -2147483648};
+	int	arr[] = {1, 2, 3, 4, 5, 6};
 	int	size = sizeof(arr) / sizeof(arr[0]);
 	t_stack	*stack;
+	t_stack	*b;
 
+	b = malloc(sizeof(t_stack *));
+	b->next = NULL;
+	b->prev = NULL;
+	b->size = 0;
 	create_stack(arr, size, &stack);
+	rotate_a(&stack);
+	reverse_ra(&stack);
+	swap_a(&stack);
+	swap_a(&stack);
+	// push_b(&stack, &b);
 	display_list(stack);
-	printf("%d\n%d\n", stack->size, size);
+	display_list(b);
 	free_stack(&stack);
 	// stack = malloc(sizeof(t_stack) * )
 	return EXIT_SUCCESS;

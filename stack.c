@@ -24,8 +24,8 @@ void	free_split(char **str)
 
 void	display_list(t_stack *stack)
 {
-	t_stack *tmp;
-	int	i;
+	t_stack		*tmp;
+	int			i;
 
 	i = 1;
 	tmp = stack;

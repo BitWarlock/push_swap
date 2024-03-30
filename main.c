@@ -144,12 +144,10 @@ void	parse_args(int ac, char *av[])
 	free_stack(&stack_a);
 }
 
-void	f(void){system("leaks push_swap");};
 int	main(int argc, char *argv[])
 {
-	atexit(f);
 	if (argc < 2)
-		print_error();
+		return (1);
 	if (!check_args(argc, argv))
 		print_error();
 	parse_args(argc, argv);
