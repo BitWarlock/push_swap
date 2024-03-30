@@ -1,0 +1,47 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mrezki <marvin@42.fr>                      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/01/23 18:01:07 by mrezki            #+#    #+#              #
+#    Updated: 2024/03/04 16:38:59 by mrezki           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+EXEC            = push_swap
+HEADER		= push_swap.h
+LIBFT           = libft.a
+LIB_DIR         = ./libft
+RM              = rm -rf
+CFLAGS          = -Wall -Wextra -Werror -g
+
+SRCS            = main.c stack.c
+
+OBJS            = $(SRCS:.c=.o)
+
+all: $(EXEC)
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c -o $@ $<
+
+$(LIBFT):
+	@$(MAKE) -C $(LIB_DIR)
+	@mv $(LIB_DIR)/$(LIBFT) .
+
+
+$(EXEC):  $(LIBFT) $(OBJS)
+	@$(CC) $(CFLAGS) $^ -o $@
+
+clean:
+	@$(RM) $(OBJS) $(OBJS_B)
+	@$(MAKE) -C libft/ clean
+
+fclean: clean
+	@$(RM) $(LIBFT) $(EXEC) a.out .DS_Store
+	@$(MAKE) -C libft/ fclean
+
+re: fclean all
+
+.PHONY: clean fclean
