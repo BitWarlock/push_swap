@@ -75,13 +75,42 @@ void	add_to_stack(t_stack **stack, int data)
 	}
 }
 
-// void	check_dups(t_stack *stack)
-// {
-// 	t_stack	*tmp;
+void	check_dups(t_stack *stack, int size)
+{
+	int	*arr;
+	int	i;
+	int	j;
+	int	a;
+	t_stack	*tmp;
 
-// 	tmp = stack;
-
-// }
+	tmp = stack;
+	i = 0;
+	a = 0;
+	arr = malloc(sizeof(int) * size);
+	while (1)
+	{
+		arr[a] = stack->data;
+		if (stack->next == tmp)
+			break ;
+		stack = stack->next;
+		a++;
+	}
+	while (i < size - 1)
+	{
+		j = i + 1;
+		while (j < size)
+		{
+			if (arr[i] == arr[j])
+			{
+				free(arr);
+				print_error();
+			}
+			j++;
+		}
+		i++;
+	}
+	free(arr);
+}
 
 void	parse_args(int ac, char *av[])
 {
@@ -109,7 +138,7 @@ void	parse_args(int ac, char *av[])
 		free_split(strs);
 		i++;
 	}
-	// check_dups(stack_a);	
+	check_dups(stack_a, stack_a->size);	
 	display_list(stack_a);
 	printf("size: %d\n", stack_a->size);
 	free_stack(&stack_a);
@@ -118,7 +147,7 @@ void	parse_args(int ac, char *av[])
 void	f(void){system("leaks push_swap");};
 int	main(int argc, char *argv[])
 {
-	// atexit(f);
+	atexit(f);
 	if (argc < 2)
 		print_error();
 	if (!check_args(argc, argv))

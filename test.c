@@ -86,7 +86,7 @@ void	f(void){system("leaks a.out");};
 
 int main(void)
 {
-	// atexit(f);
+	atexit(f);
 	int	arr[] = {-123, 52434, 5454, 5345, -765,
 				756, 75, -7657657, 524656, 5346546, 543543, 5346, 0, 534, 2147483647, -2147483648};
 	int	size = sizeof(arr) / sizeof(arr[0]);
