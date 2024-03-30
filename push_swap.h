@@ -20,13 +20,16 @@
 
 typedef struct s_stack
 {
-	void			*content;
 	struct s_stack	*next;
+	struct s_stack	*prev;
+	int				data;
+	int				size;
 }			t_stack;
 
-void	print_list(t_list *list);
 void	free_split(char **str);
+void	free_stack(t_stack **stack);
 void	init_stack(t_stack *stack_a);
+void	display_list(t_stack *stack);
 
 int		check_args(int argc, char *argv[]);
 

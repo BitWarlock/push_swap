@@ -22,19 +22,40 @@ void	free_split(char **str)
 	free(str);
 }
 
-void	print_list(t_list *list)
+void	display_list(t_stack *stack)
 {
-	t_list	*tmp;
+	t_stack *tmp;
+	int	i;
 
-	tmp = list;
-	while(tmp)
+	i = 1;
+	tmp = stack;
+	if (!tmp)
+		exit(0);
+	else
 	{
-		ft_printf(1, "%d\n", tmp->content);
-		tmp = tmp->next;
+		printf("Stack: \n");
+		while (1)
+		{
+			printf("%d: %d.\n", i, stack->data);
+			if (stack->next == tmp)
+				break ;
+			stack = stack->next;
+			i++;
+		}
 	}
 }
-//
-// void	init_stack(t_stack *stack_a)
-// {
-// 	
-// }
+
+void	free_stack(t_stack **stack)
+{
+	t_stack	*tmp;
+	t_stack	*next;
+
+	tmp = *stack;
+	while ((*stack)->next != tmp)
+	{
+		next = (*stack)->next;
+		free(*stack);
+		*stack = next;
+	}
+	free(*stack);
+}

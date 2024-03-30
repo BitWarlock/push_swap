@@ -6,6 +6,7 @@
 typedef struct s_stack
 {
 	int	data;
+	int	size;
 	struct s_stack *next;
 	struct s_stack *prev;
 }		t_stack;
@@ -27,16 +28,20 @@ void	create_stack(int arr[], int size, t_stack **stack)
 			*stack = new;
 			new->next = *stack;
 			new->prev = *stack;
+			new->size = 1;
+			(*stack)->size = 1;
 		}
-		else {
+		else
+		{
 			tmp = (*stack)->prev;
 			tmp->next = new;
 			new->prev = tmp;
 			new->next = *stack;
 			tmp = *stack;
 			tmp->prev = new;
+			new->size += 1;
+			(*stack)->size++;
 		}
-		// printf("in stack: %d, %d\n", i + 1, new->data);
 		i++;
 	}
 }
@@ -77,15 +82,19 @@ void	free_stack(t_stack **stack)
 	free(*stack);
 }
 
+void	f(void){system("leaks a.out");};
+
 int main(void)
 {
-	int	arr[15] = {-123, 52434, 5454, 5345, -765,
-				756, 75, -7657657, 524656, 5346546, 543543, 5346, 0, 534};
+	// atexit(f);
+	int	arr[] = {-123, 52434, 5454, 5345, -765,
+				756, 75, -7657657, 524656, 5346546, 543543, 5346, 0, 534, 2147483647, -2147483648};
 	int	size = sizeof(arr) / sizeof(arr[0]);
 	t_stack	*stack;
 
 	create_stack(arr, size, &stack);
 	display_list(stack);
+	printf("%d\n%d\n", stack->size, size);
 	free_stack(&stack);
 	// stack = malloc(sizeof(t_stack) * )
 	return EXIT_SUCCESS;
