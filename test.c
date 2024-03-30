@@ -65,15 +65,16 @@ void	display_list(t_stack *stack)
 void	free_stack(t_stack **stack)
 {
 	t_stack	*tmp;
-	t_stack *tmp2;
+	t_stack	*next;
 
 	tmp = *stack;
-	while (tmp->next != NULL)
+	while ((*stack)->next != tmp)
 	{
-		tmp2 = tmp->next;
-		free(tmp);
-		tmp = tmp2;
+		next = (*stack)->next;
+		free(*stack);
+		*stack = next;
 	}
+	free(*stack);
 }
 
 int main(void)
