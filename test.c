@@ -61,11 +61,23 @@ void	display_list(t_stack *stack)
 		}
 	}
 }
-void f(void){system("leaks a.out");};
+
+void	free_stack(t_stack **stack)
+{
+	t_stack	*tmp;
+	t_stack *tmp2;
+
+	tmp = *stack;
+	while (tmp->next != NULL)
+	{
+		tmp2 = tmp->next;
+		free(tmp);
+		tmp = tmp2;
+	}
+}
 
 int main(void)
 {
-	atexit(f);
 	int	arr[15] = {-123, 52434, 5454, 5345, -765,
 				756, 75, -7657657, 524656, 5346546, 543543, 5346, 0, 534};
 	int	size = sizeof(arr) / sizeof(arr[0]);
@@ -73,6 +85,7 @@ int main(void)
 
 	create_stack(arr, size, &stack);
 	display_list(stack);
+	free_stack(&stack);
 	// stack = malloc(sizeof(t_stack) * )
 	return EXIT_SUCCESS;
 }
