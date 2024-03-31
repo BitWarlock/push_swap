@@ -245,26 +245,26 @@ void	add_to_stack(t_stack **stack, int data)
 void	push_b(t_stack **a, t_stack **b)
 {
 	t_stack	*last;
+	t_stack	*s_last;
 
 	last = (*a)->prev;
+	s_last = (*a)->prev->prev;
+	free(last);
+	(*a)->prev = s_last;
+	s_last->next = (*a);
 	add_to_stack(b, last->data);
-	(*a)->prev = last->prev;
-	// free((*a));
 }
 
 void	f(void){system("leaks a.out");};
 
 int main(void)
 {
+	// atexit(f);
 	int	arr[] = {1, 2, 3, 4, 5, 6};
 	int	size = sizeof(arr) / sizeof(arr[0]);
 	t_stack	*stack;
 	t_stack	*b;
 
-	b = malloc(sizeof(t_stack *));
-	b->next = NULL;
-	b->prev = NULL;
-	b->size = 0;
 	create_stack(arr, size, &stack);
 	rotate_a(&stack);
 	reverse_ra(&stack);
@@ -274,7 +274,9 @@ int main(void)
 	// print_stacks(stack, b);
 	push_b(&stack, &b);
 	display_list(stack);
+	display_list(b);
 	free_stack(&stack);
+	free_stack(&b);
 	// stack = malloc(sizeof(t_stack) * )
 	return EXIT_SUCCESS;
 }
