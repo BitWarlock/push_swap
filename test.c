@@ -87,8 +87,44 @@ void	display_list(t_stack *stack)
 			if (stack->next == tmp)
 				break ;
 			stack = stack->next;
-			i--;
+			i++;
 		}
+	}
+}
+
+void	print_stacks(t_stack *a, t_stack *b)
+{
+	t_stack	*atmp;
+	t_stack	*btmp;
+	int	i;
+	int	size;
+
+	if (a->size == 0 && b->size == 0)
+		printf("Both stacks are Empty.\n");
+	if (a->size >= b->size)
+		size = a->size;
+	else
+		size = b->size;
+	i = 0;
+	atmp = a;
+	btmp = b;
+	printf("Stack A\n\n");
+	while (i < size)
+	{
+		a = a->prev;
+		printf("%d\t\n", a->data);
+		// b = b->next;
+		i++;
+	}
+	size = b->size;
+	i = 0;
+	printf("\nStack B\n\n");
+	while (i < size)
+	{
+		b = b->prev;
+		printf("%d\t\t\n", b->data);
+		// b = b->next;
+		i++;
 	}
 }
 
@@ -175,18 +211,46 @@ void	swap_ab(t_stack **a, t_stack **b)
 	swap_b(b);
 }
 
-// void	push_b(t_stack **a, t_stack **b)
-// {
-// 	if ((*b)->size == 0)
-// 	{
-// 		*b = new;
-// 		(*b)->next = *b;
-// 		new->prev = *b;
-// 		count = 1;
-// 		(*b)->size = 1;
-// 		new->data = data;
-// 	}
-// }
+void	add_to_stack(t_stack **stack, int data)
+{
+	static int	count;
+	t_stack	*new;
+	t_stack	*tmp;
+
+	new = (t_stack *)malloc(sizeof(t_stack));
+	if (count == 0)
+	{
+		*stack = new;
+		new->next = *stack;
+		new->prev = *stack;
+		count = 1;
+		(*stack)->size = 1;
+		new->data = data;
+	}
+	else
+	{
+		tmp = (*stack)->prev;
+		tmp->next = new;
+		new->prev = tmp;
+		new->next = *stack;
+		tmp = *stack;
+		tmp->prev = new;
+		new->size += 1;
+		(*stack)->size++;
+		new->data = data;
+		count++;
+	}
+}
+
+void	push_b(t_stack **a, t_stack **b)
+{
+	t_stack	*last;
+
+	last = (*a)->prev;
+	add_to_stack(b, last->data);
+	(*a)->prev = last->prev;
+	// free((*a));
+}
 
 void	f(void){system("leaks a.out");};
 
@@ -206,9 +270,10 @@ int main(void)
 	reverse_ra(&stack);
 	swap_a(&stack);
 	swap_a(&stack);
-	// push_b(&stack, &b);
+	// display_list(b);
+	// print_stacks(stack, b);
+	push_b(&stack, &b);
 	display_list(stack);
-	display_list(b);
 	free_stack(&stack);
 	// stack = malloc(sizeof(t_stack) * )
 	return EXIT_SUCCESS;
