@@ -6,18 +6,12 @@
 /*   By: mrezki <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 22:22:53 by mrezki            #+#    #+#             */
-/*   Updated: 2024/03/29 22:22:58 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/03/31 22:38:40 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "push_swap.h"
-
-void	print_error(void)
-{
-	ft_printf(2, "Error\n");
-	exit(EXIT_FAILURE);
-}
 
 int	check_args(int argc, char *argv[])
 {
@@ -42,37 +36,6 @@ int	check_args(int argc, char *argv[])
 		i++;
 	}
 	return (1);
-}
-
-void	add_to_stack(t_stack **stack, int data)
-{
-	static int	count;
-	t_stack	*new;
-	t_stack	*tmp;
-
-	new = (t_stack *)malloc(sizeof(t_stack));
-	if (count == 0)
-	{
-		*stack = new;
-		new->next = *stack;
-		new->prev = *stack;
-		count = 1;
-		(*stack)->size = 1;
-		new->data = data;
-	}
-	else
-	{
-		tmp = (*stack)->prev;
-		tmp->next = new;
-		new->prev = tmp;
-		new->next = *stack;
-		tmp = *stack;
-		tmp->prev = new;
-		new->size += 1;
-		(*stack)->size++;
-		new->data = data;
-		count++;
-	}
 }
 
 void	check_dups(t_stack *stack, int size)
@@ -112,9 +75,131 @@ void	check_dups(t_stack *stack, int size)
 	free(arr);
 }
 
+void	rotate_a(t_stack **a)
+{
+	*a = (*a)->next;
+	ft_printf(1, "ra\n");
+}
+
+void	rotate_b(t_stack **a)
+{
+	*a = (*a)->next;
+	ft_printf(1, "rb\n");
+}
+
+void	rotate_ab(t_stack **a, t_stack **b)
+{
+	*a = (*a)->next;
+	*b = (*b)->next;
+	ft_printf(1, "rr\n");
+}
+
+void	reverse_ra(t_stack **a)
+{
+	*a = (*a)->prev;
+	ft_printf(1, "rra\n");
+}
+
+void	reverse_rb(t_stack **a)
+{
+	*a = (*a)->prev;
+	ft_printf(1, "rra\n");
+}
+
+void	reverse_rab(t_stack **a, t_stack **b)
+{
+	*a = (*a)->prev;
+	*b = (*b)->prev;
+	ft_printf(1, "rrr\n");
+}
+
+int	stack_size(t_stack *a)
+{
+	t_stack	*tmp;
+	int	i;
+
+	if (!a)
+		return (0);
+	i = 1;
+	tmp = a;
+	while (a->next != tmp)
+	{
+		i++;
+		a = a->next;
+	}
+	return (i);
+}
+
+void	display_list(t_stack *stack)
+{
+	t_stack		*tmp;
+	int		size;
+
+	size = stack_size(stack);
+	tmp = stack;
+	if (!tmp)
+		exit(0);
+	else
+	{
+		printf("Top\n");
+		while (1)
+		{
+			printf("\t%0d\n", stack->data);
+			if (stack->next == tmp)
+				break ;
+			stack = stack->next;
+			size--;
+		}
+	}
+}
+
+void	swap_a(t_stack **a)
+{
+	int		tmp;
+
+	if (stack_size(*a) < 2)
+		return ;
+	tmp = (*a)->data;
+	(*a)->data = (*a)->next->data;
+	(*a)->next->data = tmp;
+	ft_printf(1, "sa\n");
+}
+
+void	check_if_sorted(t_stack *a)
+{
+	t_stack	*tmp;
+
+	tmp = a;
+	while (a->next != tmp)
+	{
+		if (a->data < a->next->data)
+			a = a->next;
+		else
+			return ;
+	}
+	exit(EXIT_SUCCESS);
+}
+
+void	push_b(t_stack **a, t_stack **b)
+{
+	t_stack	*last;
+	t_stack	*second;
+	t_stack	*head;
+
+	head = (*a);
+	last = (*a)->prev;
+	second = (*a)->next;
+	last->next = second;
+	second->prev = last;
+	(*a) = second;
+	printf("*a: %d\nnext: %d\n del: %d\ntmp: %d\n", (*a)->data, last->data, second->data, head->data);
+	add_to_stack(b, head->data);
+	free(head);
+}
+
 void	parse_args(int ac, char *av[])
 {
-	t_stack	*stack_a;
+	t_stack	*stack_a = NULL;
 	char	**strs;
 	int	i;
 	int	j;
@@ -130,7 +215,7 @@ void	parse_args(int ac, char *av[])
 		while (j < size)
 		{
 			tmp = ft_atoi(strs[j]);
-			if (tmp == 0)
+			if (tmp == -1)
 				print_error();
 			add_to_stack(&stack_a, tmp);
 			j++;
@@ -138,14 +223,23 @@ void	parse_args(int ac, char *av[])
 		free_split(strs);
 		i++;
 	}
-	check_dups(stack_a, stack_a->size);	
+	check_dups(stack_a, stack_size(stack_a));
+	check_if_sorted(stack_a);
+	// rotate_a(&stack_a);
+	// swap_a(&stack_a);
+	t_stack *b = NULL;
+	push_b(&stack_a, &b);
+	// display_list(stack_a);
+	// printf("size: %d\n", stack_a->size);
 	display_list(stack_a);
-	printf("size: %d\n", stack_a->size);
+	// display_list(b);
 	free_stack(&stack_a);
 }
 
+void	f(void){system("leaks push_swap");};
 int	main(int argc, char *argv[])
 {
+	atexit(f);
 	if (argc < 2)
 		return (1);
 	if (!check_args(argc, argv))

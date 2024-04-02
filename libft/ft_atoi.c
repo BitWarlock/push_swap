@@ -35,10 +35,10 @@ int	ft_atoi(const char *str)
 	{
 		tmp = res * -1;
 		if ((unsigned int)tmp < 2147483648)
-			return (0);
+			return (-1);
 	}
 	else if (res > INT_MAX)
-		return (0);
+		return (-1);
 	return (sign * res);
 }
 // #include <stdio.h>

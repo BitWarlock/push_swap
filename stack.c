@@ -22,29 +22,6 @@ void	free_split(char **str)
 	free(str);
 }
 
-void	display_list(t_stack *stack)
-{
-	t_stack		*tmp;
-	int			i;
-
-	i = 1;
-	tmp = stack;
-	if (!tmp)
-		exit(0);
-	else
-	{
-		printf("Stack: \n");
-		while (1)
-		{
-			printf("%d: %d.\n", i, stack->data);
-			if (stack->next == tmp)
-				break ;
-			stack = stack->next;
-			i++;
-		}
-	}
-}
-
 void	free_stack(t_stack **stack)
 {
 	t_stack	*tmp;
@@ -58,4 +35,34 @@ void	free_stack(t_stack **stack)
 		*stack = next;
 	}
 	free(*stack);
+}
+
+void	add_to_stack(t_stack **stack, int data)
+{
+	t_stack	*new;
+	t_stack	*last;
+
+	new = malloc(sizeof(t_stack));
+	if (!*stack)
+	{
+		*stack = new;
+		new->next = new;
+		new->prev = new;
+		new->data = data;
+	}
+	else
+	{
+		last = (*stack)->prev;
+		new->next = *stack;
+		new->prev = last;
+		(*stack)->prev = new;
+		last->next = new;
+		new->data = data;
+	}
+}
+
+void	print_error(void)
+{
+	ft_printf(2, "Error\n");
+	exit(EXIT_FAILURE);
 }

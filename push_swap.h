@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pswap.h                                            :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:12:52 by mrezki            #+#    #+#             */
-/*   Updated: 2024/03/04 16:48:24 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/03/31 05:06:00 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ typedef struct s_stack
 	struct s_stack	*next;
 	struct s_stack	*prev;
 	int				data;
-	int				size;
 }			t_stack;
 
 void	free_split(char **str);
 void	free_stack(t_stack **stack);
 void	init_stack(t_stack *stack_a);
 void	display_list(t_stack *stack);
+void	add_to_stack(t_stack **stack, int data);
+void	print_error(void);
 
 int		check_args(int argc, char *argv[]);
 
