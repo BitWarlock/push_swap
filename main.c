@@ -138,7 +138,7 @@ void	display_list(t_stack *stack)
 	size = stack_size(stack);
 	tmp = stack;
 	if (!tmp)
-		exit(0);
+		return ;
 	else
 	{
 		printf("Top\n");
@@ -186,14 +186,45 @@ void	push_b(t_stack **a, t_stack **b)
 	t_stack	*second;
 	t_stack	*head;
 
+	if (!(*a))
+		return ;
+	if ((*a) == (*a)->next)
+	{
+		add_to_stack(b, (*a)->data);
+		(*a) = NULL;
+		return ;
+	}
 	head = (*a);
 	last = (*a)->prev;
 	second = (*a)->next;
 	last->next = second;
 	second->prev = last;
 	(*a) = second;
-	printf("*a: %d\nnext: %d\n del: %d\ntmp: %d\n", (*a)->data, last->data, second->data, head->data);
 	add_to_stack(b, head->data);
+	free(head);
+}
+
+void	push_a(t_stack **a, t_stack **b)
+{
+	t_stack	*last;
+	t_stack	*second;
+	t_stack	*head;
+
+	if (!(*b))
+		return ;
+	if ((*b) == (*b)->next)
+	{
+		add_to_stack(a, (*b)->data);
+		(*b) = NULL;
+		return ;
+	}
+	head = (*b);
+	last = (*b)->prev;
+	second = (*b)->next;
+	last->next = second;
+	second->prev = last;
+	(*b) = second;
+	add_to_stack(a, head->data);
 	free(head);
 }
 
@@ -229,17 +260,25 @@ void	parse_args(int ac, char *av[])
 	// swap_a(&stack_a);
 	t_stack *b = NULL;
 	push_b(&stack_a, &b);
+	push_b(&stack_a, &b);
+	push_b(&stack_a, &b);
+	push_b(&stack_a, &b);
+	push_a(&stack_a, &b);
+	push_a(&stack_a, &b);
+	push_a(&stack_a, &b);
+	push_a(&stack_a, &b);
 	// display_list(stack_a);
 	// printf("size: %d\n", stack_a->size);
 	display_list(stack_a);
-	// display_list(b);
+	display_list(b);
 	free_stack(&stack_a);
+	free_stack(&b);
 }
 
-void	f(void){system("leaks push_swap");};
+void	f(void){system("heap push_swap find-leaks");};
 int	main(int argc, char *argv[])
 {
-	atexit(f);
+	// atexit(f);
 	if (argc < 2)
 		return (1);
 	if (!check_args(argc, argv))

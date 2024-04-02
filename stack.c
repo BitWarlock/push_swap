@@ -27,6 +27,8 @@ void	free_stack(t_stack **stack)
 	t_stack	*tmp;
 	t_stack	*next;
 
+	if (!(*stack))
+		return ;
 	tmp = *stack;
 	while ((*stack)->next != tmp)
 	{
