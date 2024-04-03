@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "push_swap.h"
+#include <stdlib.h>
 
 int	check_args(int argc, char *argv[])
 {
@@ -75,43 +75,7 @@ void	check_dups(t_stack *stack, int size)
 	free(arr);
 }
 
-void	rotate_a(t_stack **a)
-{
-	*a = (*a)->next;
-	ft_printf(1, "ra\n");
-}
 
-void	rotate_b(t_stack **a)
-{
-	*a = (*a)->next;
-	ft_printf(1, "rb\n");
-}
-
-void	rotate_ab(t_stack **a, t_stack **b)
-{
-	*a = (*a)->next;
-	*b = (*b)->next;
-	ft_printf(1, "rr\n");
-}
-
-void	reverse_ra(t_stack **a)
-{
-	*a = (*a)->prev;
-	ft_printf(1, "rra\n");
-}
-
-void	reverse_rb(t_stack **a)
-{
-	*a = (*a)->prev;
-	ft_printf(1, "rra\n");
-}
-
-void	reverse_rab(t_stack **a, t_stack **b)
-{
-	*a = (*a)->prev;
-	*b = (*b)->prev;
-	ft_printf(1, "rrr\n");
-}
 
 int	stack_size(t_stack *a)
 {
@@ -130,7 +94,7 @@ int	stack_size(t_stack *a)
 	return (i);
 }
 
-void	display_list(t_stack *stack)
+void	display_list(t_stack *stack, char c)
 {
 	t_stack		*tmp;
 	int		size;
@@ -141,7 +105,10 @@ void	display_list(t_stack *stack)
 		return ;
 	else
 	{
-		printf("Top\n");
+		if (c == 'a')
+			printf("Stack a Top\n");
+		else if (c == 'b')
+			printf("Stack b Top\n");
 		while (1)
 		{
 			printf("\t%0d\n", stack->data);
@@ -150,20 +117,11 @@ void	display_list(t_stack *stack)
 			stack = stack->next;
 			size--;
 		}
+		ft_putchar_fd('\n', 1);
 	}
 }
 
-void	swap_a(t_stack **a)
-{
-	int		tmp;
 
-	if (stack_size(*a) < 2)
-		return ;
-	tmp = (*a)->data;
-	(*a)->data = (*a)->next->data;
-	(*a)->next->data = tmp;
-	ft_printf(1, "sa\n");
-}
 
 void	check_if_sorted(t_stack *a)
 {
@@ -180,57 +138,50 @@ void	check_if_sorted(t_stack *a)
 	exit(EXIT_SUCCESS);
 }
 
-void	push_b(t_stack **a, t_stack **b)
+int	smallest_in_stack(t_stack *a)
 {
-	t_stack	*last;
-	t_stack	*second;
 	t_stack	*head;
+	int	tmp;
 
-	if (!(*a))
-		return ;
-	if ((*a) == (*a)->next)
+	tmp = a->data;
+	head = a;
+	while (1)
 	{
-		add_to_stack(b, (*a)->data);
-		(*a) = NULL;
-		return ;
+		if (a->next == head)
+			break ;
+		if (tmp > a->next->data)
+			tmp = a->next->data;
+		a = a->next;
 	}
-	head = (*a);
-	last = (*a)->prev;
-	second = (*a)->next;
-	last->next = second;
-	second->prev = last;
-	(*a) = second;
-	add_to_stack(b, head->data);
-	free(head);
+	return (tmp);
 }
 
-void	push_a(t_stack **a, t_stack **b)
-{
-	t_stack	*last;
-	t_stack	*second;
-	t_stack	*head;
+// void	sort_three(t_stack **a, t_stack **b)
+// {
+// 	t_stack	*head;
+// 	t_stack	*top;
+// 	int	small;
+// 	// size_t	big;
+//
+// 	small = smallest_in_stack(*a);
+// }
 
-	if (!(*b))
-		return ;
-	if ((*b) == (*b)->next)
+void	sort_stack(t_stack **a, t_stack **b)
+{
+	(void)b;
+	if (stack_size(*a) == 2)
 	{
-		add_to_stack(a, (*b)->data);
-		(*b) = NULL;
-		return ;
+		swap_a(a);
+		exit(EXIT_SUCCESS);
 	}
-	head = (*b);
-	last = (*b)->prev;
-	second = (*b)->next;
-	last->next = second;
-	second->prev = last;
-	(*b) = second;
-	add_to_stack(a, head->data);
-	free(head);
+	// if (stack_size(*a) > 2)
+		// sort_three(a, b);
 }
 
 void	parse_args(int ac, char *av[])
 {
-	t_stack	*stack_a = NULL;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
 	char	**strs;
 	int	i;
 	int	j;
@@ -238,6 +189,8 @@ void	parse_args(int ac, char *av[])
 	int	tmp;
 
 	i = 1;
+	stack_a = NULL;
+	stack_b = NULL;
 	while (i < ac)
 	{
 		strs = ft_split(av[i], ' ');
@@ -255,27 +208,18 @@ void	parse_args(int ac, char *av[])
 		i++;
 	}
 	check_dups(stack_a, stack_size(stack_a));
+	// sort 3 and 4: 2 or 3 moves
+	// sort 5: less than 12
+	// sort 100: < 700
+	// sort 500: < 5500
 	check_if_sorted(stack_a);
-	// rotate_a(&stack_a);
-	// swap_a(&stack_a);
-	t_stack *b = NULL;
-	push_b(&stack_a, &b);
-	push_b(&stack_a, &b);
-	push_b(&stack_a, &b);
-	push_b(&stack_a, &b);
-	push_a(&stack_a, &b);
-	push_a(&stack_a, &b);
-	push_a(&stack_a, &b);
-	push_a(&stack_a, &b);
-	// display_list(stack_a);
-	// printf("size: %d\n", stack_a->size);
-	display_list(stack_a);
-	display_list(b);
-	free_stack(&stack_a);
-	free_stack(&b);
+	sort_stack(&stack_a, &stack_b);
+	display_list(stack_a, 'a');
+	display_list(stack_b, 'b');
+	free_stack(&stack_a, &stack_b);
 }
 
-void	f(void){system("heap push_swap find-leaks");};
+void	f(void){system("leaks push_swap");};
 int	main(int argc, char *argv[])
 {
 	// atexit(f);

@@ -17,7 +17,8 @@ LIB_DIR         = ./libft
 RM              = rm -rf
 CFLAGS          = -Wall -Wextra -Werror -g
 
-SRCS            = main.c stack.c
+SRCS            = main.c stack.c push_ab.c rotate_stack.c reverse_stack.c \
+		  swap_stack.c
 
 OBJS            = $(SRCS:.c=.o)
 
