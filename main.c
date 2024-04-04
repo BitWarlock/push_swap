@@ -12,7 +12,6 @@
 
 #include "libft/libft.h"
 #include "push_swap.h"
-#include <stdlib.h>
 
 int	check_args(int argc, char *argv[])
 {
@@ -243,26 +242,29 @@ void	sort_three(t_stack **a)
 //
 void	sort_five(t_stack **a, t_stack **b)
 {
-	// int max = max_in_stack(*a);
-	// int min = min_in_stack(*a);
-	int tmp = (*a)->data;
-	t_stack	*head = *a;
-	t_stack	*b_head;
-	// t_stack	*tmp = *a;
+	t_stack	*head;
+
 	push_b(a, b);
-	b_head = *b;
-	display_list(*a, 'a');
-	display_list(*b, 'b');
-	while ((*a)->next != head)
+	push_b(a, b);
+	sort_three(a);
+	head = (*a);
+	if ((*b)->data > (*a)->prev->data)
 	{
-		tmp = (*a)->data;
-		while ((*b)->next != b_head && (*b)->data > tmp)
-		{
-			push_a(a, b);
-			(*b) = (*b)->next;
-		}
 		push_b(a, b);
-		(*a) = (*a)->next;
+		rotate_a(a);
+	}
+	else if ((*b)->data < (*a)->data)
+		push_b(a, b);
+	else if ((*b)->data < (*a)->data && (*b)->data > (*a)->next->data)
+	{
+		push_b(a, b);
+		swap_a(a);
+	}
+	else {
+		reverse_ra(a);
+		reverse_ra(a);
+		push_a(a, b);
+		reverse_ra(a);
 	}
 }
 
