@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "push_swap.h"
 #include <stdlib.h>
 
@@ -123,7 +124,22 @@ void	display_list(t_stack *stack, char c)
 
 
 
-void	check_if_sorted(t_stack *a)
+int	check_if_sorted(t_stack *a)
+{
+	t_stack	*tmp;
+
+	tmp = a;
+	while (a->next != tmp)
+	{
+		if (a->data < a->next->data)
+			a = a->next;
+		else
+			return (0);
+	}
+	return (1);
+}
+
+void	stack_sorted(t_stack *a)
 {
 	t_stack	*tmp;
 
@@ -138,16 +154,38 @@ void	check_if_sorted(t_stack *a)
 	exit(EXIT_SUCCESS);
 }
 
-int	smallest_in_stack(t_stack *a)
+int	max_in_stack(t_stack *a)
 {
 	t_stack	*head;
 	int	tmp;
 
-	tmp = a->data;
+	if (!a)
+		return (0);
 	head = a;
+	tmp = a->data;
 	while (1)
 	{
-		if (a->next == head)
+		if (head == a->next)
+			break ;
+		if (tmp < a->next->data)
+			tmp = a->next->data;
+		a = a->next;
+	}
+	return (tmp);
+}
+
+int	min_in_stack(t_stack *a)
+{
+	t_stack	*head;
+	int	tmp;
+
+	if (!a)
+		return (0);
+	head = a;
+	tmp = a->data;
+	while (1)
+	{
+		if (head == a->next)
 			break ;
 		if (tmp > a->next->data)
 			tmp = a->next->data;
@@ -156,26 +194,92 @@ int	smallest_in_stack(t_stack *a)
 	return (tmp);
 }
 
-// void	sort_three(t_stack **a, t_stack **b)
+void	sort_three(t_stack **a)
+{
+	t_stack	*last;
+	int	max;
+	int	min;
+
+	min = min_in_stack(*a);
+	last = (*a)->prev;
+	max = max_in_stack(*a);
+	if (last->data == max)
+		swap_a(a);
+	else if (max == (*a)->data)
+	{
+		rotate_a(a);
+		if (check_if_sorted(*a))
+			return ;
+		swap_a(a);
+	}
+	else
+	{
+		reverse_ra(a);
+		if (check_if_sorted(*a))
+			return ;
+		swap_a(a);
+	}
+}
+
+// void	add_target(t_stack **a, t_stack **b)
 // {
-// 	t_stack	*head;
-// 	t_stack	*top;
-// 	int	small;
-// 	// size_t	big;
+// 	int	target;
+// 	t_stack	*a_head;
+// 	t_stack	*b_head;
 //
-// 	small = smallest_in_stack(*a);
+// 	a_head = *a;
+// 	b_head = *b;
+// 	target = b_head->data;
+// 	while ((*b)->next != b_head)
+// 	{
+// 		*a = a_head;
+// 		while ((*a)->next != a_head)
+// 		{
+// 			if ()
+// 		}
+//
+// 	}
 // }
+//
+void	sort_five(t_stack **a, t_stack **b)
+{
+	// int max = max_in_stack(*a);
+	// int min = min_in_stack(*a);
+	int tmp = (*a)->data;
+	t_stack	*head = *a;
+	t_stack	*b_head;
+	// t_stack	*tmp = *a;
+	push_b(a, b);
+	b_head = *b;
+	display_list(*a, 'a');
+	display_list(*b, 'b');
+	while ((*a)->next != head)
+	{
+		tmp = (*a)->data;
+		while ((*b)->next != b_head && (*b)->data > tmp)
+		{
+			push_a(a, b);
+			(*b) = (*b)->next;
+		}
+		push_b(a, b);
+		(*a) = (*a)->next;
+	}
+}
 
 void	sort_stack(t_stack **a, t_stack **b)
 {
-	(void)b;
-	if (stack_size(*a) == 2)
+	int	size;
+
+	size = stack_size(*a);
+	if (size == 2)
 	{
 		swap_a(a);
 		exit(EXIT_SUCCESS);
 	}
-	// if (stack_size(*a) > 2)
-		// sort_three(a, b);
+	if (size == 3)
+		sort_three(a);
+	else if (size == 5)
+		sort_five(a, b);
 }
 
 void	parse_args(int ac, char *av[])
@@ -212,7 +316,7 @@ void	parse_args(int ac, char *av[])
 	// sort 5: less than 12
 	// sort 100: < 700
 	// sort 500: < 5500
-	check_if_sorted(stack_a);
+	stack_sorted(stack_a);
 	sort_stack(&stack_a, &stack_b);
 	display_list(stack_a, 'a');
 	display_list(stack_b, 'b');
