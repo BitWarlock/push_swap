@@ -15,33 +15,34 @@ HEADER		= push_swap.h
 LIBFT           = libft.a
 LIB_DIR         = ./libft
 RM              = rm -rf
-CFLAGS          = -Wall -Wextra -Werror -g
+# CFLAGS          = -Wall -Wextra -Werror -g
+CFLAGS		= -g
 
 SRCS            = main.c stack.c push_ab.c rotate_stack.c reverse_stack.c \
-		  swap_stack.c
+		  swap_stack.c sort_small.c sort_five.c parse.c
 
 OBJS            = $(SRCS:.c=.o)
 
 all: $(EXEC)
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -c -o $@ $<
+%.o: %.c $(HEADER)
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(LIBFT):
-	@$(MAKE) -C $(LIB_DIR)
-	@mv $(LIB_DIR)/$(LIBFT) .
+	$(MAKE) -C $(LIB_DIR)
+	mv $(LIB_DIR)/$(LIBFT) .
 
 
 $(EXEC):  $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 clean:
-	@$(RM) $(OBJS) $(OBJS_B)
-	@$(MAKE) -C libft/ clean
+	$(RM) $(OBJS) $(OBJS_B)
+	$(MAKE) -C libft/ clean
 
 fclean: clean
-	@$(RM) $(LIBFT) $(EXEC) a.out .DS_Store
-	@$(MAKE) -C libft/ fclean
+	$(RM) $(LIBFT) $(EXEC) a.out .DS_Store
+	$(MAKE) -C libft/ fclean
 
 re: fclean all
 

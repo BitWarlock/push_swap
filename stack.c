@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   stack.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:27:13 by mrezki            #+#    #+#             */
-/*   Updated: 2024/03/04 18:35:59 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/05 05:12:23 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	add_to_stack(t_stack **stack, int data)
 		new->next = new;
 		new->prev = new;
 		new->data = data;
+		new->size = 1;
 	}
 	else
 	{
@@ -70,6 +71,7 @@ void	add_to_stack(t_stack **stack, int data)
 		(*stack)->prev = new;
 		last->next = new;
 		new->data = data;
+		new->size = stack_size(new);
 	}
 }
 
@@ -86,8 +88,8 @@ void	add_to_top_stack(t_stack **a, int data)
 	if (!(*a))
 	{
 		*a = new;
-		new->next = new;
-		new->prev = new;
+		(new->next = new) && (new->prev = new);
+		new->size = 1;
 	}
 	else
 	{
@@ -98,6 +100,7 @@ void	add_to_top_stack(t_stack **a, int data)
 		first->prev = new;
 		last->next = new;
 		*a = new;
+		new->size = stack_size(new);
 	}
 }
 

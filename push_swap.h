@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:12:52 by mrezki            #+#    #+#             */
-/*   Updated: 2024/03/31 05:06:00 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/05 05:12:13 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_stack
 	struct s_stack	*next;
 	struct s_stack	*prev;
 	int				data;
-	int				target;
+	int				size;
 }			t_stack;
 
 void	display_list(t_stack *stack, char a);
@@ -40,14 +40,31 @@ void	print_error(void);
 void	push_b(t_stack **a, t_stack **b);
 void	push_a(t_stack **a, t_stack **b);
 void	rotate_ab(t_stack **a, t_stack **b);
-void	rotate_b(t_stack **a);
-void	rotate_a(t_stack **a);
+t_stack	*rotate_b(t_stack **a);
+t_stack	*rotate_a(t_stack **a);
 void	reverse_rab(t_stack **a, t_stack **b);
 void	reverse_rb(t_stack **a);
-void	reverse_ra(t_stack **a);
+t_stack	*reverse_ra(t_stack **a);
 void	swap_ab(t_stack **a, t_stack **b);
 void	swap_a(t_stack **a);
 void	swap_b(t_stack **a);
+
+void	sort_three(t_stack **a);
+int	min_in_stack(t_stack *a);
+int	max_in_stack(t_stack *a);
+int	check_if_sorted(t_stack *a);
+void	stack_sorted(t_stack *a);
+void	sort_five(t_stack **a, t_stack **b);
+void	small_top(t_stack **a, int min);
+int	index_min(t_stack *a);
+void	r_a(t_stack **a, int min);
+void	rr_a(t_stack **a, int min);
+void	sort_five(t_stack **a, t_stack **b);
+void	check_dups(t_stack *stack, int size);
+int	check_args(int argc, char *argv[]);
+void	parse_args(int ac, char *av[]);
+void	sort_stack(t_stack **a, t_stack **b);
+void	fill_stack(int ac, char *av[], t_stack **a);
 
 int		check_args(int argc, char *argv[]);
 
