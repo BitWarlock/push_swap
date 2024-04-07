@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 01:41:00 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:12:29 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/07 22:56:48 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,21 @@ void	swap_ab(t_stack **a, t_stack **b)
 	(*b)->data = (*b)->next->data;
 	(*b)->next->data = tmp;
 	ft_printf(1, "ss\n");
+}
+
+int	stack_size(t_stack *a)
+{
+	t_stack	*tmp;
+	int		i;
+
+	if (!a)
+		return (0);
+	i = 1;
+	tmp = a;
+	while (a->next != tmp)
+	{
+		i++;
+		a = a->next;
+	}
+	return (i);
 }

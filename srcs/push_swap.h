@@ -5,16 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 18:12:52 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:12:13 by mrezki           ###   ########.fr       */
+/*   Created: 2024/04/07 22:55:56 by mrezki            #+#    #+#             */
+/*   Updated: 2024/04/07 22:55:57 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
-# include <unistd.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
 
@@ -25,12 +23,6 @@ typedef struct s_stack
 	int				data;
 	int				index;
 }			t_stack;
-
-typedef struct s_chunk
-{
-	int	count;
-	int	size;
-}			t_chunk;
 
 /* Instructions */
 
@@ -80,9 +72,8 @@ void	sort_large_stack(t_stack **a, t_stack **b);
 void	sort_three(t_stack **a);
 void	sort_five(t_stack **a, t_stack **b);
 void	sort_stack(t_stack **a);
-void	push_to_b(t_stack **a, t_stack **b, t_chunk *chunk);
-
-void	display_list(t_stack *stack, char a);
-void	display_index(t_stack *a);
+void	push_to_b(t_stack **a, t_stack **b, int *count, int *chunk_size);
+void	push_to_a(t_stack **a, t_stack **b, int *count);
+int		num_top(t_stack *a, int *count);
 
 #endif // !PSWAP_H

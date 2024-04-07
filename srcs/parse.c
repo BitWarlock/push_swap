@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 05:57:43 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:57:44 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/07 22:55:44 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,5 @@ void	check_dups(t_stack *stack)
 			cmp = cmp->next;
 		}
 		curr = curr->next;
-	}
-	cmp = stack->next;
-	while (cmp != curr)
-	{
-		if (curr->data == cmp->data)
-			print_error();
-		cmp = cmp->next;
 	}
 }

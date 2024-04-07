@@ -3,36 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   large_stack_sort.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrezki <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 21:30:56 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/05 21:30:57 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/07 22:55:34 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_to_b(t_stack **a, t_stack **b, t_chunk *chunk)
+void	sort_large_stack(t_stack **a, t_stack **b)
+{
+	int	count;
+	int	chunk_size;
+
+	index_stack(*a);
+	count = 0;
+	if (stack_size(*a) > 100)
+		chunk_size = 40;
+	else
+		chunk_size = 17;
+	push_to_b(a, b, &count, &chunk_size);
+	index_stack(*b);
+	push_to_a(a, b, &count);
+}
+
+void	push_to_b(t_stack **a, t_stack **b, int *count, int *chunk_size)
 {
 	while (*a)
 	{
-		if ((*a)->index <= chunk->count)
+		if ((*a)->index <= (*count))
 		{
 			push_b(a, b);
 			(*b) = rotate_b(b);
-			chunk->count++;
+			(*count)++;
+			(*chunk_size)++;
 		}
-		else if ((*a)->index <= chunk->count + chunk->size)
+		else if ((*a)->index <= (*chunk_size))
 		{
 			push_b(a, b);
-			chunk->count++;
+			(*count)++;
+			(*chunk_size)++;
 		}
 		else
 			(*a) = rotate_a(a);
 	}
 }
 
-int	num_top(t_stack *a, t_chunk *chunk)
+int	num_top(t_stack *a, int *count)
 {
 	t_stack	*head;
 	int		i;
@@ -41,7 +59,7 @@ int	num_top(t_stack *a, t_chunk *chunk)
 	i = 1;
 	while (1)
 	{
-		if (a->index == chunk->count)
+		if (a->index == (*count))
 			break ;
 		i++;
 		a = a->next;
@@ -53,42 +71,24 @@ int	num_top(t_stack *a, t_chunk *chunk)
 	return (0);
 }
 
-void	push_to_a(t_stack **a, t_stack **b, t_chunk *chunk)
+void	push_to_a(t_stack **a, t_stack **b, int *count)
 {
 	t_stack	*head;
 
 	head = (*b);
 	while (*b)
 	{
-		if ((*b)->index == chunk->count)
+		if ((*b)->index == (*count))
 		{
 			push_a(a, b);
 			head = (*b);
-			chunk->count--;
+			(*count)--;
 		}
-		else if (num_top(*b, chunk) == 1)
+		else if (num_top(*b, count) == 1)
 			(*b) = rotate_b(b);
 		else
 			(*b) = reverse_rb(b);
 	}
-}
-
-void	sort_large_stack(t_stack **a, t_stack **b)
-{
-	t_chunk	*chunk;
-
-	chunk = malloc(sizeof(t_chunk));
-	if (!chunk)
-		print_error();
-	index_stack(*a);
-	chunk->count = 0;
-	chunk->size = 14;
-	if (stack_size(*a) > 100)
-		chunk->size += 17;
-	push_to_b(a, b, chunk);
-	index_stack(*b);
-	push_to_a(a, b, chunk);
-	free(chunk);
 }
 
 void	index_stack(t_stack *a)

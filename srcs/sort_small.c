@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 05:11:48 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:11:50 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/07 22:56:43 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ void	sort_three(t_stack **a)
 {
 	t_stack	*last;
 	int		max;
-	int		min;
 
 	if (check_if_sorted(*a))
 		return ;
-	min = min_in_stack(*a);
 	last = (*a)->prev;
 	max = max_in_stack(*a);
 	if (last->data == max)

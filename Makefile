@@ -13,11 +13,11 @@
 EXEC            = push_swap
 PROG		= checker
 HEADER		= srcs/push_swap.h
+B_HEADER	= Bonus/push_swap_bonus.h
 LIBFT           = libft.a
 LIB_DIR         = ./libft
 RM              = rm -rf
 CFLAGS          = -Wall -Wextra -Werror
-# CFLAGS		= -g
 
 SRCS            = srcs/main.c srcs/stack.c srcs/push_ab.c srcs/rotate_stack.c \
 		  srcs/reverse_stack.c srcs/swap_stack.c srcs/sort_small.c \
@@ -41,10 +41,10 @@ $(LIBFT):
 	mv $(LIB_DIR)/$(LIBFT) .
 
 
-$(EXEC):  $(LIBFT) $(OBJS)
+$(EXEC): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $^ -o $@
 
-bonus: $(LIBFT) $(B_OBJS)
+bonus: $(B_OBJS) $(B_HEADER) $(LIBFT)
 	$(CC) $(CFLAGS) $^ -o $(PROG)
 
 clean:

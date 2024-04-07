@@ -6,28 +6,11 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 22:22:53 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:12:02 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/07 22:55:38 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	stack_size(t_stack *a)
-{
-	t_stack	*tmp;
-	int		i;
-
-	if (!a)
-		return (0);
-	i = 1;
-	tmp = a;
-	while (a->next != tmp)
-	{
-		i++;
-		a = a->next;
-	}
-	return (i);
-}
 
 int	main(int argc, char *argv[])
 {
