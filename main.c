@@ -56,12 +56,13 @@ void	display_list(t_stack *stack, char c)
 	}
 }
 
-void	f(void){system("leaks push_swap");};
+// void	f(void){system("leaks push_swap");};
 int	main(int argc, char *argv[])
 {
-	atexit(f);
 	if (argc < 2)
 		return (1);
+	if (!argv[1][0])
+		print_error();
 	if (!check_args(argc, argv))
 		print_error();
 	parse_args(argc, argv);

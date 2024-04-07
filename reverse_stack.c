@@ -20,21 +20,26 @@ t_stack	*reverse_ra(t_stack **a)
 	return ((*a)->prev);
 }
 
-void	reverse_rb(t_stack **a)
+t_stack	*reverse_rb(t_stack **a)
 {
 	if (*a == (*a)->next)
-		return ;
-	*a = (*a)->prev;
+		return (*a);
 	ft_printf(1, "rrb\n");
+	return ((*a)->prev);
+}
+
+t_stack	*silent_rotate(t_stack **a)
+{
+	if (*a == (*a)->next)
+		return (*a);
+	return ((*a)->prev);
 }
 
 void	reverse_rab(t_stack **a, t_stack **b)
 {
-	if (*a == (*a)->next)
+	if (!(*a) && !(*b))
 		return ;
-	if (*b == (*b)->next)
-		return ;
-	*a = (*a)->prev;
-	*b = (*b)->prev;
+	(*a) = silent_rotate(a);
+	(*b) = silent_rotate(b);
 	ft_printf(1, "rrr\n");
 }

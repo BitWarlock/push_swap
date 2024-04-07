@@ -21,8 +21,6 @@ void	push_b(t_stack **a, t_stack **b)
 	if (*a)
 	{
 		add_to_top_stack(b, (*a)->data);
-		(*b)->size = stack_size(*b);
-		(*a)->size = stack_size(*a);
 		second = (*a)->next;
 		last = (*a)->prev;
 		free(*a);
@@ -46,8 +44,6 @@ void	push_a(t_stack **a, t_stack **b)
 	if (*b)
 	{
 		add_to_top_stack(a, (*b)->data);
-		(*b)->size = stack_size(*b);
-		(*a)->size = stack_size(*a);
 		second = (*b)->next;
 		last = (*b)->prev;
 		free(*b);

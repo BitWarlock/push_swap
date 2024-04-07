@@ -22,12 +22,12 @@ void	free_split(char **str)
 	free(str);
 }
 
-void	free_stack(t_stack **stack, t_stack **b)
+void	free_stack(t_stack **stack)
 {
 	t_stack	*tmp;
 	t_stack	*next;
 
-	if (!(*stack) || !(*b))
+	if (!(*stack))
 		return ;
 	tmp = *stack;
 	while ((*stack)->next != tmp)
@@ -36,15 +36,7 @@ void	free_stack(t_stack **stack, t_stack **b)
 		free(*stack);
 		*stack = next;
 	}
-	tmp = (*b)->next;
-	while ((*b)->next != tmp)
-	{
-		next = (*b)->next;
-		free(*b);
-		*b = next;
-	}
 	free(*stack);
-	free(*b);
 }
 
 void	add_to_stack(t_stack **stack, int data)
@@ -61,7 +53,6 @@ void	add_to_stack(t_stack **stack, int data)
 		new->next = new;
 		new->prev = new;
 		new->data = data;
-		new->size = 1;
 	}
 	else
 	{
@@ -71,7 +62,6 @@ void	add_to_stack(t_stack **stack, int data)
 		(*stack)->prev = new;
 		last->next = new;
 		new->data = data;
-		new->size = stack_size(new);
 	}
 }
 
@@ -89,7 +79,6 @@ void	add_to_top_stack(t_stack **a, int data)
 	{
 		*a = new;
 		(new->next = new) && (new->prev = new);
-		new->size = 1;
 	}
 	else
 	{
@@ -100,7 +89,6 @@ void	add_to_top_stack(t_stack **a, int data)
 		first->prev = new;
 		last->next = new;
 		*a = new;
-		new->size = stack_size(new);
 	}
 }
 

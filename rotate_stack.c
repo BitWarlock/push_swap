@@ -20,21 +20,26 @@ t_stack	*rotate_a(t_stack **a)
 	return ((*a)->next);
 }
 
-// void	rotate_b(t_stack **a)
-// {
-// 	if (*a == (*a)->next)
-// 		return ;
-// 	*a = (*a)->next;
-// 	ft_printf(1, "rb\n");
-// }
+t_stack	*rotate_b(t_stack **a)
+{
+	if (*a == (*a)->next)
+		return (*a);
+	ft_printf(1, "rb\n");
+	return ((*a)->next);
+}
+
+static t_stack	*silent_rotate(t_stack **a)
+{
+	if (*a == (*a)->next)
+		return (*a);
+	return ((*a)->next);
+}
 
 void	rotate_ab(t_stack **a, t_stack **b)
 {
-	if (*a == (*a)->next)
+	if (!(*a) && !(*b))
 		return ;
-	if (*b == (*b)->next)
-		return ;
-	*a = (*a)->next;
-	*b = (*b)->next;
+	(*a) = silent_rotate(a);
+	(*b) = silent_rotate(b);
 	ft_printf(1, "rr\n");
 }

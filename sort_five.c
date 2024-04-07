@@ -42,9 +42,6 @@ int	index_min(t_stack *a)
 
 void	small_top(t_stack **a, int min)
 {
-	t_stack	*head;
-
-	head = *a;
 	if (index_min(*a) < 2)
 		r_a(a, min_in_stack(*a));
 	else if (index_min(*a) > 2)
@@ -56,7 +53,7 @@ void	small_top(t_stack **a, int min)
 	}
 }
 
-void	r_a(t_stack **a, int min)
+t_stack	*r_a(t_stack **a, int min)
 {
 	t_stack	*head;
 
@@ -67,9 +64,10 @@ void	r_a(t_stack **a, int min)
 			break ;
 		(*a) = rotate_a(a);
 	}
+	return (*a);
 }
 
-void	rr_a(t_stack **a, int min)
+t_stack	*rr_a(t_stack **a, int min)
 {
 	t_stack	*head;
 
@@ -80,4 +78,33 @@ void	rr_a(t_stack **a, int min)
 			break ;
 		(*a) = reverse_ra(a);
 	}
+	return (*a);
+}
+
+t_stack	*r_b(t_stack **b, int min)
+{
+	t_stack	*head;
+
+	head = (*b);
+	while ((*b)->next != head)
+	{
+		if ((*b)->data == min)
+			break ;
+		(*b) = rotate_b(b);
+	}
+	return (*b);
+}
+
+t_stack	*rr_b(t_stack **b, int min)
+{
+	t_stack	*head;
+
+	head = (*b);
+	while ((*b)->prev != head)
+	{
+		if ((*b)->data == min)
+			break ;
+		(*b) = reverse_rb(b);
+	}
+	return (*b);
 }

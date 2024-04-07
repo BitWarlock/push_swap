@@ -19,7 +19,8 @@ RM              = rm -rf
 CFLAGS		= -g
 
 SRCS            = main.c stack.c push_ab.c rotate_stack.c reverse_stack.c \
-		  swap_stack.c sort_small.c sort_five.c parse.c
+		  swap_stack.c sort_small.c sort_five.c parse.c \
+		  large_stack_sort.c
 
 OBJS            = $(SRCS:.c=.o)
 

@@ -12,10 +12,12 @@
 
 #include "push_swap.h"
 
-void	sort_stack(t_stack **a, t_stack **b)
+void	sort_stack(t_stack **a)
 {
-	int	size;
+	t_stack	*b;
+	int		size;
 
+	b = NULL;
 	size = stack_size(*a);
 	if (size == 2)
 	{
@@ -24,51 +26,58 @@ void	sort_stack(t_stack **a, t_stack **b)
 	}
 	if (size == 3)
 		sort_three(a);
-	else if (size > 3)
-		sort_five(a, b);
+	else if (size < 6)
+		sort_five(a, &b);
+	else
+		sort_large_stack(a, &b);
 }
 
 void	parse_args(int ac, char *av[])
 {
 	t_stack	*stack_a;
-	t_stack	*stack_b;
-
-	stack_a = NULL;
-	stack_b = NULL;
-	fill_stack(ac, av, &stack_a);
-	check_dups(stack_a, stack_size(stack_a));
-	stack_sorted(stack_a);
-	sort_stack(&stack_a, &stack_b);
-	display_list(stack_a, 'a');
-	display_list(stack_b, 'b');
-	free_stack(&stack_a, &stack_b);
-}
-
-void	fill_stack(int ac, char *av[], t_stack **a)
-{
 	char	**strs;
 	int		i;
 	int		j;
-	int		size;
 	int		tmp;
 
-	i = 1;
-	while (i < ac)
+	i = 0;
+	stack_a = NULL;
+	while (++i < ac)
 	{
 		strs = ft_split(av[i], ' ');
-		size = ft_count_tokens(av[i], ' ');
-		j = 0;
-		while (j < size)
+		j = -1;
+		while (++j < ft_count_tokens(av[i], ' '))
 		{
 			tmp = ft_atoi(strs[j]);
 			if (tmp == -1)
 				print_error();
-			add_to_stack(a, tmp);
-			j++;
+			add_to_stack(&stack_a, tmp);
 		}
 		free_split(strs);
-		i++;
 	}
+	check_dups(stack_a, stack_size(stack_a));
+	stack_sorted(stack_a);
+	// t_stack *b = NULL;
+	// stack_a = rotate_a(&stack_a);
+	// push_b(&stack_a, &b);
+	// // push_b(&stack_a, &b);
+	// rotate_ab(&stack_a, &b);
+	// display_list(stack_a, 'a');
+	// display_list(b, 'b');
+	sort_stack(&stack_a);
+	// if (check_if_sorted(stack_a) == 1)
+	// 	printf("Sorted\n");
+	// else
+	// 	printf("Not sorted\n");
+	free_stack(&stack_a);
+}
+
+int	helper(char *str)
+{
+	if ((str[0] == '+' && str[1] == '+')
+		|| (str[0] == '+' && !str[1]))
+		return (0);
+	return (1);
 }
 
 int	check_args(int argc, char *argv[])
@@ -82,6 +91,8 @@ int	check_args(int argc, char *argv[])
 		j = 0;
 		while (argv[i][j])
 		{
+			if (helper(argv[i]) == 0)
+				return (0);
 			if (ft_isdigit(argv[i][j]) && (argv[i][j + 1] == '-'
 				|| argv[i][j + 1] == '+'))
 				return (0);
@@ -90,9 +101,7 @@ int	check_args(int argc, char *argv[])
 				|| argv[i][j] == '+')
 				j++;
 			else
-			{
 				return (0);
-			}
 		}
 		i++;
 	}
