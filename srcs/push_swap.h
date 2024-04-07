@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_stack
 {
@@ -59,7 +59,7 @@ void	add_to_stack(t_stack **stack, int data);
 void	add_to_top_stack(t_stack **a, int data);
 void	print_error(void);
 void	stack_sorted(t_stack *a);
-void	small_top(t_stack **a, int min);
+void	small_top(t_stack **a);
 void	fill_stack(int ac, char *av[], t_stack **a);
 void	index_stack(t_stack *a);
 int		min_in_stack(t_stack *a);
@@ -69,7 +69,7 @@ int		max_in_stack(t_stack *a);
 
 /* Parse */
 
-void	check_dups(t_stack *stack, int size);
+void	check_dups(t_stack *stack);
 void	parse_args(int ac, char *av[]);
 int		check_args(int argc, char *argv[]);
 int		check_if_sorted(t_stack *a);

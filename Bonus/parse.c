@@ -10,26 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-void	sort_stack(t_stack **a)
+int	check_if_sorted(t_stack *a)
 {
-	t_stack	*b;
-	int		size;
+	t_stack	*tmp;
 
-	b = NULL;
-	size = stack_size(*a);
-	if (size == 2)
+	tmp = a;
+	while (a->next != tmp)
 	{
-		swap_a(a);
-		exit(EXIT_SUCCESS);
+		if (a->data < a->next->data)
+			a = a->next;
+		else
+			return (0);
 	}
-	if (size == 3)
-		sort_three(a);
-	else if (size < 6)
-		sort_five(a, &b);
-	else
-		sort_large_stack(a, &b);
+	return (1);
 }
 
 void	parse_args(int ac, char *av[])
@@ -55,9 +50,8 @@ void	parse_args(int ac, char *av[])
 		}
 		free_split(strs);
 	}
-	check_dups(stack_a, stack_size(stack_a));
-	stack_sorted(stack_a);
-	sort_stack(&stack_a);
+	check_dups(stack_a);
+	apply_instructions(&stack_a);
 	free_stack(&stack_a);
 }
 
@@ -97,7 +91,7 @@ int	check_args(int argc, char *argv[])
 	return (1);
 }
 
-void	check_dups(t_stack *stack, int size)
+void	check_dups(t_stack *stack)
 {
 	t_stack	*curr;
 	t_stack	*cmp;

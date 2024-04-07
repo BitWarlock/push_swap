@@ -12,23 +12,6 @@
 
 #include "push_swap.h"
 
-int	index_number(t_stack *a, int number)
-{
-	t_stack	*head;
-	int		i;
-
-	head = a;
-	i = 0;
-	while (1)
-	{
-		if (a->next == head || a->data == number)
-			break ;
-		i++;
-		a = a->next;
-	}
-	return (i);
-}
-
 void	push_to_b(t_stack **a, t_stack **b, t_chunk *chunk)
 {
 	while (*a)
@@ -51,8 +34,8 @@ void	push_to_b(t_stack **a, t_stack **b, t_chunk *chunk)
 
 int	num_top(t_stack *a, t_chunk *chunk)
 {
-	int	i;
 	t_stack	*head;
+	int		i;
 
 	head = a;
 	i = 1;
@@ -65,7 +48,7 @@ int	num_top(t_stack *a, t_chunk *chunk)
 		if (a == head)
 			break ;
 	}
-	if (i < stack_size(a) / 2)
+	if (i <= stack_size(a) / 2)
 		return (1);
 	return (0);
 }
@@ -74,12 +57,13 @@ void	push_to_a(t_stack **a, t_stack **b, t_chunk *chunk)
 {
 	t_stack	*head;
 
-	head = (*b)->next;
+	head = (*b);
 	while (*b)
 	{
 		if ((*b)->index == chunk->count)
 		{
 			push_a(a, b);
+			head = (*b);
 			chunk->count--;
 		}
 		else if (num_top(*b, chunk) == 1)
@@ -98,64 +82,37 @@ void	sort_large_stack(t_stack **a, t_stack **b)
 		print_error();
 	index_stack(*a);
 	chunk->count = 0;
-	chunk->size = 15;
+	chunk->size = 14;
 	if (stack_size(*a) > 100)
-		chunk->size += 15;
+		chunk->size += 17;
 	push_to_b(a, b, chunk);
 	index_stack(*b);
 	push_to_a(a, b, chunk);
 	free(chunk);
 }
 
-int	*index_arr(int size, t_stack *a)
-{
-	t_stack	*head;
-	int		*arr;
-	int		i;
-
-	head = (a);
-	i = 0;
-	arr = malloc(sizeof(int) * stack_size(a));
-	if (!arr)
-		print_error();
-	while ((a)->next != head)
-	{
-		arr[i] = (a)->data;
-		(a) = (a)->next;
-		i++;
-	}
-	arr[i] = (a)->data;
-	return (arr);
-}
-
 void	index_stack(t_stack *a)
 {
-	t_stack	*head;
-	int		i;
-	int		j;
-	int		*arr;
-	int		index;
+	t_stack	*curr;
+	t_stack	*cmp;
+	int		count;
 
-	i = 0;
-	index = 1;
-	head = (a);
-	arr = index_arr(stack_size(a), a);
-	while (i < stack_size(a))
+	curr = a;
+	while (curr)
 	{
-		j = 0;
-		index = 1;
-		while (arr[j])
+		cmp = a;
+		count = 0;
+		while (cmp)
 		{
-			if (arr[i] > arr[j])
-				index++;
-			j++;
+			if (cmp->data < curr->data)
+				count++;
+			cmp = cmp->next;
+			if (cmp == a)
+				break ;
 		}
-		(a)->index = index;
-		if ((a)->next == head)
+		curr->index = count + 1;
+		curr = curr->next;
+		if (curr == a)
 			break ;
-		(a) = (a)->next;
-		i++;
 	}
-	free(arr);
 }
-

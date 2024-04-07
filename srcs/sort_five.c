@@ -14,9 +14,9 @@
 
 void	sort_five(t_stack **a, t_stack **b)
 {
-	small_top(a, min_in_stack(*a));
+	small_top(a);
 	push_b(a, b);
-	small_top(a, min_in_stack(*a));
+	small_top(a);
 	push_b(a, b);
 	sort_three(a);
 	push_a(a, b);
@@ -40,7 +40,7 @@ int	index_min(t_stack *a)
 	return (i);
 }
 
-void	small_top(t_stack **a, int min)
+void	small_top(t_stack **a)
 {
 	if (index_min(*a) < 2)
 		r_a(a, min_in_stack(*a));
