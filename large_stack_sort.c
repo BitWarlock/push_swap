@@ -156,5 +156,6 @@ void	index_stack(t_stack *a)
 		(a) = (a)->next;
 		i++;
 	}
+	free(arr);
 }
 

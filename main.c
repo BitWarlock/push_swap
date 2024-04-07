@@ -59,7 +59,7 @@ void	display_list(t_stack *stack, char c)
 void	f(void){system("leaks push_swap");};
 int	main(int argc, char *argv[])
 {
-	atexit(f);
+	// atexit(f);
 	if (argc < 2)
 		return (1);
 	if (!argv[1][0])
