@@ -61,7 +61,7 @@ void	print_error(void);
 void	stack_sorted(t_stack *a);
 void	small_top(t_stack **a, int min);
 void	fill_stack(int ac, char *av[], t_stack **a);
-void	index_stack(t_stack **a);
+void	index_stack(t_stack *a);
 int		min_in_stack(t_stack *a);
 int		stack_size(t_stack *a);
 int		index_min(t_stack *a);
@@ -80,7 +80,9 @@ void	sort_large_stack(t_stack **a, t_stack **b);
 void	sort_three(t_stack **a);
 void	sort_five(t_stack **a, t_stack **b);
 void	sort_stack(t_stack **a);
+void	push_to_b(t_stack **a, t_stack **b, t_chunk *chunk);
 
 void	display_list(t_stack *stack, char a);
+void	display_index(t_stack *a);
 
 #endif // !PSWAP_H

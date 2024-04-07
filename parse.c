@@ -57,18 +57,7 @@ void	parse_args(int ac, char *av[])
 	}
 	check_dups(stack_a, stack_size(stack_a));
 	stack_sorted(stack_a);
-	// t_stack *b = NULL;
-	// stack_a = rotate_a(&stack_a);
-	// push_b(&stack_a, &b);
-	// // push_b(&stack_a, &b);
-	// rotate_ab(&stack_a, &b);
-	// display_list(stack_a, 'a');
-	// display_list(b, 'b');
 	sort_stack(&stack_a);
-	// if (check_if_sorted(stack_a) == 1)
-	// 	printf("Sorted\n");
-	// else
-	// 	printf("Not sorted\n");
 	free_stack(&stack_a);
 }
 

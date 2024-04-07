@@ -80,31 +80,3 @@ t_stack	*rr_a(t_stack **a, int min)
 	}
 	return (*a);
 }
-
-t_stack	*r_b(t_stack **b, int min)
-{
-	t_stack	*head;
-
-	head = (*b);
-	while ((*b)->next != head)
-	{
-		if ((*b)->data == min)
-			break ;
-		(*b) = rotate_b(b);
-	}
-	return (*b);
-}
-
-t_stack	*rr_b(t_stack **b, int min)
-{
-	t_stack	*head;
-
-	head = (*b);
-	while ((*b)->prev != head)
-	{
-		if ((*b)->data == min)
-			break ;
-		(*b) = reverse_rb(b);
-	}
-	return (*b);
-}

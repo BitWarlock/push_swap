@@ -12,15 +12,20 @@
 
 #include "libft.h"
 
+void	init_vars(unsigned long *res, unsigned long *tmp, int *sign)
+{
+	*tmp = 0;
+	*res = 0;
+	*sign = 1;
+}
+
 int	ft_atoi(const char *str)
 {
 	unsigned long	res;
 	unsigned long	tmp;
 	int				sign;
 
-	tmp = 0;
-	res = 0;
-	sign = 1;
+	init_vars(&res, &tmp, &sign);
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-' || *str == '+')

@@ -22,7 +22,7 @@ t_stack	*reverse_ra(t_stack **a)
 
 t_stack	*reverse_rb(t_stack **a)
 {
-	if (*a == (*a)->next)
+	if (*a == (*a)->prev)
 		return (*a);
 	ft_printf(1, "rrb\n");
 	return ((*a)->prev);
