@@ -12,20 +12,21 @@
 
 #include "libft.h"
 
-void	init_vars(long *res, long *tmp, int *sign)
+void	init_vars(long *res, long *tmp, int *sign, int *flag)
 {
 	*tmp = 0;
 	*res = 0;
 	*sign = 1;
+	*flag = 0;
 }
 
 int	ft_atoi(const char *str, int *flag)
 {
 	long	res;
 	long	tmp;
-	int				sign;
+	int		sign;
 
-	init_vars(&res, &tmp, &sign);
+	init_vars(&res, &tmp, &sign, flag);
 	while (*str == ' ' || (*str >= 9 && *str <= 13))
 		str++;
 	if (*str == '-' || *str == '+')
@@ -34,15 +35,13 @@ int	ft_atoi(const char *str, int *flag)
 	{
 		tmp = res * 10 + (*str - '0');
 		res = tmp;
+		if (sign == -1)
+			if (res > 2147483648)
+				*flag = 1;
+		if (res > INT_MAX)
+			*flag = 1;
 		str++;
 	}
-	if (sign == -1)
-	{
-		if (tmp > 2147483648)
-			*flag = 1;
-	}
-	else if (res > INT_MAX)
-		*flag = 1;
 	return (sign * res);
 }
 // #include <stdio.h>

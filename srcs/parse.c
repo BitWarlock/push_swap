@@ -32,17 +32,16 @@ void	sort_stack(t_stack **a)
 		sort_large_stack(a, &b);
 }
 
-void	parse_args(int ac, char *av[])
+void	parse_args(int ac, char *av[], t_stack **stack_a)
 {
-	t_stack	*stack_a;
 	char	**strs;
 	int		i;
 	int		j;
 	int		tmp;
-	static int	flag;
+	int		flag;
 
 	i = 0;
-	stack_a = NULL;
+	*stack_a = NULL;
 	while (++i < ac)
 	{
 		strs = ft_split(av[i], ' ');
@@ -52,14 +51,14 @@ void	parse_args(int ac, char *av[])
 			tmp = ft_atoi(strs[j], &flag);
 			if (flag)
 				print_error();
-			add_to_stack(&stack_a, tmp);
+			add_to_stack(stack_a, tmp);
 		}
 		free_split(strs);
 	}
-	check_dups(stack_a);
-	stack_sorted(stack_a);
-	sort_stack(&stack_a);
-	free_stack(&stack_a);
+	check_dups(*stack_a);
+	stack_sorted(*stack_a);
+	sort_stack(stack_a);
+	free_stack(stack_a);
 }
 
 int	helper(char *str)

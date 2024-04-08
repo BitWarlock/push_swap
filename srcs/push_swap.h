@@ -60,7 +60,7 @@ int		max_in_stack(t_stack *a);
 /* Parse */
 
 void	check_dups(t_stack *stack);
-void	parse_args(int ac, char *av[]);
+void	parse_args(int ac, char *av[], t_stack **a);
 int		check_args(int argc, char *argv[]);
 int		check_if_sorted(t_stack *a);
 

@@ -55,7 +55,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 /* Parse */
 
 void	check_dups(t_stack *stack);
-void	parse_args(int ac, char *av[]);
+void	parse_args(int ac, char *av[], t_stack **a);
 int		check_args(int argc, char *argv[]);
 int		check_if_sorted(t_stack *a);
 

@@ -25,7 +25,7 @@ void	apply_instructions(t_stack **a)
 		free(str);
 		str = get_next_line(0);
 	}
-	if (check_if_sorted(*a))
+	if (check_if_sorted(*a) && b == NULL)
 		ft_printf(1, "OK\n");
 	else
 		ft_printf(1, "KO\n");
