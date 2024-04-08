@@ -39,6 +39,7 @@ void	parse_args(int ac, char *av[])
 	int		i;
 	int		j;
 	int		tmp;
+	static int	flag;
 
 	i = 0;
 	stack_a = NULL;
@@ -48,8 +49,8 @@ void	parse_args(int ac, char *av[])
 		j = -1;
 		while (++j < ft_count_tokens(av[i], ' '))
 		{
-			tmp = ft_atoi(strs[j]);
-			if (tmp == -1)
+			tmp = ft_atoi(strs[j], &flag);
+			if (flag)
 				print_error();
 			add_to_stack(&stack_a, tmp);
 		}

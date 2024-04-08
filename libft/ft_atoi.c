@@ -12,17 +12,17 @@
 
 #include "libft.h"
 
-void	init_vars(unsigned long *res, unsigned long *tmp, int *sign)
+void	init_vars(long *res, long *tmp, int *sign)
 {
 	*tmp = 0;
 	*res = 0;
 	*sign = 1;
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *str, int *flag)
 {
-	unsigned long	res;
-	unsigned long	tmp;
+	long	res;
+	long	tmp;
 	int				sign;
 
 	init_vars(&res, &tmp, &sign);
@@ -38,12 +38,11 @@ int	ft_atoi(const char *str)
 	}
 	if (sign == -1)
 	{
-		tmp = res * -1;
-		if ((unsigned int)tmp < 2147483648)
-			return (-1);
+		if (tmp > 2147483648)
+			*flag = 1;
 	}
 	else if (res > INT_MAX)
-		return (-1);
+		*flag = 1;
 	return (sign * res);
 }
 // #include <stdio.h>
