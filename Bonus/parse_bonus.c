@@ -51,6 +51,7 @@ void	parse_args(int ac, char *av[])
 		free_split(strs);
 	}
 	check_dups(stack_a);
+	stack_sorted(stack_a);
 	apply_instructions(&stack_a);
 	free_stack(&stack_a);
 }

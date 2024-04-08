@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 void	swap_a(t_stack **a)
 {
@@ -21,7 +21,6 @@ void	swap_a(t_stack **a)
 	tmp = (*a)->data;
 	(*a)->data = (*a)->next->data;
 	(*a)->next->data = tmp;
-	ft_printf(1, "sa\n");
 }
 
 void	swap_b(t_stack **a)
@@ -33,7 +32,6 @@ void	swap_b(t_stack **a)
 	tmp = (*a)->data;
 	(*a)->data = (*a)->next->data;
 	(*a)->next->data = tmp;
-	ft_printf(1, "sb\n");
 }
 
 void	swap_ab(t_stack **a, t_stack **b)
@@ -54,22 +52,4 @@ void	swap_ab(t_stack **a, t_stack **b)
 		(*b)->data = (*b)->next->data;
 		(*b)->next->data = tmp;
 	}
-	ft_printf(1, "ss\n");
-}
-
-int	stack_size(t_stack *a)
-{
-	t_stack	*tmp;
-	int		i;
-
-	if (!a)
-		return (0);
-	i = 1;
-	tmp = a;
-	while (a->next != tmp)
-	{
-		i++;
-		a = a->next;
-	}
-	return (i);
 }

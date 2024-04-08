@@ -46,13 +46,11 @@ void	swap_b(t_stack **a);
 
 void	free_split(char **str);
 void	free_stack(t_stack **stack);
-void	init_stack(t_stack *stack_a);
 void	add_to_stack(t_stack **stack, int data);
 void	add_to_top_stack(t_stack **a, int data);
 void	print_error(void);
 void	stack_sorted(t_stack *a);
 void	small_top(t_stack **a);
-void	fill_stack(int ac, char *av[], t_stack **a);
 void	index_stack(t_stack *a);
 int		min_in_stack(t_stack *a);
 int		stack_size(t_stack *a);

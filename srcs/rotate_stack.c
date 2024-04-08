@@ -14,6 +14,8 @@
 
 t_stack	*rotate_a(t_stack **a)
 {
+	if (!(*a))
+		return (NULL);
 	if (*a == (*a)->next)
 		return (*a);
 	ft_printf(1, "ra\n");
@@ -22,6 +24,8 @@ t_stack	*rotate_a(t_stack **a)
 
 t_stack	*rotate_b(t_stack **a)
 {
+	if (!(*a))
+		return (NULL);
 	if (*a == (*a)->next)
 		return (*a);
 	ft_printf(1, "rb\n");
@@ -39,7 +43,9 @@ void	rotate_ab(t_stack **a, t_stack **b)
 {
 	if (!(*a) && !(*b))
 		return ;
-	(*a) = silent_rotate(a);
-	(*b) = silent_rotate(b);
+	if ((*a))
+		(*a) = silent_rotate(a);
+	if ((*b))
+		(*b) = silent_rotate(b);
 	ft_printf(1, "rr\n");
 }

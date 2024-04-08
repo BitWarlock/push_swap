@@ -14,6 +14,8 @@
 
 t_stack	*reverse_ra(t_stack **a)
 {
+	if (!(*a))
+		return (NULL);
 	if (*a == (*a)->next)
 		return (*a);
 	ft_printf(1, "rra\n");
@@ -22,6 +24,8 @@ t_stack	*reverse_ra(t_stack **a)
 
 t_stack	*reverse_rb(t_stack **a)
 {
+	if (!(*a))
+		return (NULL);
 	if (*a == (*a)->next)
 		return (*a);
 	ft_printf(1, "rrb\n");
@@ -39,7 +43,9 @@ void	reverse_rab(t_stack **a, t_stack **b)
 {
 	if (!(*a) && !(*b))
 		return ;
-	(*a) = silent_rotate(a);
-	(*b) = silent_rotate(b);
+	if ((*a))
+		(*a) = silent_rotate(a);
+	if ((*b))
+		(*b) = silent_rotate(b);
 	ft_printf(1, "rrr\n");
 }
