@@ -33,9 +33,9 @@ int	main(int argc, char *argv[])
 	if (argc < 2)
 		return (1);
 	if (empty_string(argc, argv))
-		print_error();
+		print_error(NULL);
 	if (!check_args(argc, argv))
-		print_error();
+		print_error(NULL);
 	parse_args(argc, argv, &stack_a);
 	return (EXIT_SUCCESS);
 }

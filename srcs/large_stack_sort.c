@@ -20,7 +20,7 @@ void	sort_large_stack(t_stack **a, t_stack **b)
 	index_stack(*a);
 	count = 0;
 	if (stack_size(*a) > 100)
-		chunk_size = 40;
+		chunk_size = 41;
 	else
 		chunk_size = 17;
 	push_to_b(a, b, &count, &chunk_size);
@@ -73,15 +73,11 @@ int	num_top(t_stack *a, int *count)
 
 void	push_to_a(t_stack **a, t_stack **b, int *count)
 {
-	t_stack	*head;
-
-	head = (*b);
 	while (*b)
 	{
 		if ((*b)->index == (*count))
 		{
 			push_a(a, b);
-			head = (*b);
 			(*count)--;
 		}
 		else if (num_top(*b, count) == 1)

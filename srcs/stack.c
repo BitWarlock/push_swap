@@ -46,7 +46,7 @@ void	add_to_stack(t_stack **stack, int data)
 
 	new = malloc(sizeof(t_stack));
 	if (!new)
-		print_error();
+		print_error(NULL);
 	if (!*stack)
 	{
 		*stack = new;
@@ -73,12 +73,13 @@ void	add_to_top_stack(t_stack **a, int data)
 
 	new = malloc(sizeof(t_stack));
 	if (!new)
-		print_error();
+		print_error(NULL);
 	new->data = data;
 	if (!(*a))
 	{
 		*a = new;
-		(new->next = new) && (new->prev = new);
+		new->next = new;
+		new->prev = new;
 	}
 	else
 	{
@@ -92,8 +93,10 @@ void	add_to_top_stack(t_stack **a, int data)
 	}
 }
 
-void	print_error(void)
+void	print_error(t_stack **a)
 {
+	if (a)
+		free_stack(a);
 	ft_printf(2, "Error\n");
 	exit(EXIT_FAILURE);
 }

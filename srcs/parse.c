@@ -17,11 +17,14 @@ void	sort_stack(t_stack **a)
 	t_stack	*b;
 	int		size;
 
+	check_dups(*a);
+	stack_sorted(*a);
 	b = NULL;
 	size = stack_size(*a);
 	if (size == 2)
 	{
 		swap_a(a);
+		free_stack(a);
 		exit(EXIT_SUCCESS);
 	}
 	if (size == 3)
@@ -30,6 +33,7 @@ void	sort_stack(t_stack **a)
 		sort_five(a, &b);
 	else
 		sort_large_stack(a, &b);
+	free_stack(a);
 }
 
 void	parse_args(int ac, char *av[], t_stack **stack_a)
@@ -50,21 +54,24 @@ void	parse_args(int ac, char *av[], t_stack **stack_a)
 		{
 			tmp = ft_atoi(strs[j], &flag);
 			if (flag)
-				print_error();
+			{
+				free_split(strs);
+				print_error(stack_a);
+			}
 			add_to_stack(stack_a, tmp);
 		}
 		free_split(strs);
 	}
-	check_dups(*stack_a);
-	stack_sorted(*stack_a);
 	sort_stack(stack_a);
-	free_stack(stack_a);
 }
 
 int	helper(char *str)
 {
 	if ((str[0] == '+' && str[1] == '+')
 		|| (str[0] == '+' && !str[1]))
+		return (0);
+	if ((str[0] == '-' && str[1] == '-')
+		|| (str[0] == '-' && !str[1]))
 		return (0);
 	return (1);
 }
@@ -109,7 +116,7 @@ void	check_dups(t_stack *stack)
 		while (cmp != stack)
 		{
 			if (curr->data == cmp->data)
-				print_error();
+				print_error(&stack);
 			cmp = cmp->next;
 		}
 		curr = curr->next;

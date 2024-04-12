@@ -48,7 +48,7 @@ void	free_split(char **str);
 void	free_stack(t_stack **stack);
 void	add_to_stack(t_stack **stack, int data);
 void	add_to_top_stack(t_stack **a, int data);
-void	print_error(void);
+void	print_error(t_stack **a);
 void	stack_sorted(t_stack *a);
 void	small_top(t_stack **a);
 void	index_stack(t_stack *a);

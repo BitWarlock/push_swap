@@ -17,6 +17,8 @@ void	apply_instructions(t_stack **a)
 	char	*str;
 	t_stack	*b;
 
+	check_dups(*a);
+	stack_sorted(*a);
 	b = NULL;
 	str = get_next_line(0);
 	while (str)
@@ -29,6 +31,8 @@ void	apply_instructions(t_stack **a)
 		ft_printf(1, "OK\n");
 	else
 		ft_printf(1, "KO\n");
+	free_stack(a);
+	free_stack(&b);
 }
 
 void	check_line(char *str, t_stack **a, t_stack **b)
@@ -56,7 +60,7 @@ void	check_line(char *str, t_stack **a, t_stack **b)
 	else if (ft_strcmp(str, "pa\n") == 0)
 		push_a(a, b);
 	else
-		print_error();
+		free_all(str, a, b);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -83,6 +87,7 @@ void	stack_sorted(t_stack *a)
 		else
 			return ;
 	}
+	free_stack(&a);
 	exit(EXIT_SUCCESS);
 }
 

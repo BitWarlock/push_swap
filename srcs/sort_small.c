@@ -106,5 +106,6 @@ void	stack_sorted(t_stack *a)
 		else
 			return ;
 	}
+	free_stack(&a);
 	exit(EXIT_SUCCESS);
 }
