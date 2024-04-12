@@ -20,9 +20,9 @@ void	sort_large_stack(t_stack **a, t_stack **b)
 	index_stack(*a);
 	count = 0;
 	if (stack_size(*a) > 100)
-		chunk_size = 41;
+		chunk_size = stack_size(*a) / 16;
 	else
-		chunk_size = 17;
+		chunk_size = stack_size(*a) / 7;
 	push_to_b(a, b, &count, &chunk_size);
 	index_stack(*b);
 	push_to_a(a, b, &count);
