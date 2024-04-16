@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 22:55:56 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/08 02:05:11 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/15 13:54:18 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ void	sort_large_stack(t_stack **a, t_stack **b);
 void	sort_three(t_stack **a);
 void	sort_five(t_stack **a, t_stack **b);
 void	sort_stack(t_stack **a);
-void	push_to_b(t_stack **a, t_stack **b, int *count, int *chunk_size);
-void	push_to_a(t_stack **a, t_stack **b, int *count);
-int		num_top(t_stack *a, int *count);
+void	push_to_b(t_stack **a, t_stack **b, int *chunk_size);
+void	push_to_a(t_stack **a, t_stack **b);
+int		num_top(t_stack *a, int count);
 
 #endif // !PSWAP_H
