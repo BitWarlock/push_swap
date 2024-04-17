@@ -26,26 +26,39 @@ void	sort_large_stack(t_stack **a, t_stack **b)
 	push_to_a(a, b);
 }
 
+int	max_bits(int i)
+{
+	int	size;
+
+	size = 0;
+	while ((i >> size) != 0)
+		size++;
+	return (size);
+}
+
 void	push_to_b(t_stack **a, t_stack **b, int *chunk_size)
 {
-	int	init_size;
+	(void)chunk_size;
+	int	i;
+	int	j;
+	int	max;
+	int	size;
 
-	init_size = *chunk_size;
-	while (*a)
+	max = max_bits(max_in_stack(*a));
+	size = stack_size(*a);
+	i = 0;
+	while (i < max)
 	{
-		if ((*a)->index <= (*chunk_size) - init_size)
+		j = 1;
+		while (j < size)
 		{
-			push_b(a, b);
-			(*b) = rotate_b(b);
-			(*chunk_size)++;
+			if ((((*a)->index >> i) & 1) == 1)
+				(*a) = rotate_a(a);
+			else
+				push_b(a, b);
+			j++;
 		}
-		else if ((*a)->index <= (*chunk_size))
-		{
-			push_b(a, b);
-			(*chunk_size)++;
-		}
-		else
-			(*a) = rotate_a(a);
+		i++;
 	}
 }
 
