@@ -36,29 +36,72 @@ int	max_bits(int i)
 	return (size);
 }
 
+int	count_ints(int i)
+{
+	int	size;
+
+	if (i == 0)
+		return (1);
+	size = 0;
+	while (i != 0)
+	{
+		i /= 10;
+		size++;
+	}
+	return (size);
+}
+
+int	_abs(int i)
+{
+	if (i < 0)
+		return (i * -1);
+	return (i);
+}
+
+int	max_ints(t_stack *a)
+{
+	int	tmp;
+	t_stack	*head;
+
+	tmp = 0;
+	head = a;
+	while (1)
+	{
+		tmp = count_ints(_abs(a->data));
+		if (tmp < count_ints(_abs(a->next->data)))
+			tmp = count_ints(_abs(a->next->data));
+		a = a->next;
+		if (a == head)
+			break ;
+	}
+	return (tmp);
+}
+
 void	push_to_b(t_stack **a, t_stack **b, int *chunk_size)
 {
 	(void)chunk_size;
+	(void)b;
 	int	i;
-	int	j;
+	// int	j;
 	int	max;
-	int	size;
+	t_stack	*head;
+	// int	size;
 
-	max = max_bits(max_in_stack(*a));
-	size = stack_size(*a);
+	head = (*a);
 	i = 0;
-	while (i < max)
+	max = max_ints(*a);
+	while (1)
 	{
-		j = 1;
-		while (j < size)
+		if (count_ints((*a)->data) <= max / 3)
+			push_b(a, b);
+		else
 		{
-			if ((((*a)->index >> i) & 1) == 1)
-				(*a) = rotate_a(a);
-			else
-				push_b(a, b);
-			j++;
+			(*a) = rotate_a(a);
+			head = (*a);
 		}
-		i++;
+		(*a) = (*a)->next;
+		if ((*a) == head)
+		break ;
 	}
 }
 
