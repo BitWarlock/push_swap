@@ -21,6 +21,8 @@ void	sort_large_stack(t_stack **a, t_stack **b)
 		chunk_size = stack_size(*a) / 16;
 	else
 		chunk_size = stack_size(*a) / 7;
+	if (stack_size(*a) == 6)
+		chunk_size = 1;
 	push_to_b(a, b, &chunk_size);
 	index_stack(*b);
 	push_to_a(a, b);
