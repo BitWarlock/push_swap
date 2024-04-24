@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 05:57:43 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/15 13:54:12 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:13:04 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,72 +36,48 @@ void	sort_stack(t_stack **a)
 	free_stack(a);
 }
 
-void	parse_args(int ac, char *av[], t_stack **stack_a)
+void	init_vars(long *res, long *tmp, int *sign)
 {
-	char	**strs;
-	int		i;
-	int		j;
-	int		tmp;
-	int		flag;
-
-	i = 0;
-	*stack_a = NULL;
-	while (++i < ac)
-	{
-		strs = ft_split(av[i], ' ');
-		j = -1;
-		while (++j < ft_count_tokens(av[i], ' '))
-		{
-			tmp = ft_atoi(strs[j], &flag);
-			if (flag)
-			{
-				free_split(strs);
-				print_error(stack_a);
-			}
-			add_to_stack(stack_a, tmp);
-		}
-		free_split(strs);
-	}
-	sort_stack(stack_a);
+	*tmp = 0;
+	*res = 0;
+	*sign = 1;
 }
 
-int	helper(char *str)
+int	check_if_zero(const char *str)
 {
-	if ((str[0] == '+' && str[1] == '+')
-		|| (str[0] == '+' && !str[1]))
-		return (0);
-	if ((str[0] == '-' && str[1] == '-')
-		|| (str[0] == '-' && !str[1]))
-		return (0);
-	return (1);
+	if ((str[0] == '-' || str[0] == '+'))
+		str++;
+	while (*str == ' ' || *str == '0' || *str == '\t')
+		str++;
+	return (*str == '\0');
 }
 
-int	check_args(int argc, char *argv[])
+int	_atoi(const char *str, t_stack **a)
 {
-	int	i;
-	int	j;
+	long	res;
+	long	tmp;
+	int		sign;
 
-	i = 1;
-	while (i < argc)
+	init_vars(&res, &tmp, &sign);
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (check_if_zero(str))
+		return (0);
+	if (*str == '-' || *str == '+')
+		sign = ',' - *(str++);
+	while (*str)
 	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (helper(argv[i]) == 0)
-				return (0);
-			if (ft_isdigit(argv[i][j]) && (argv[i][j + 1] == '-'
-				|| argv[i][j + 1] == '+'))
-				return (0);
-			else if (ft_isdigit(argv[i][j]) || argv[i][j] == ' '
-				|| argv[i][j] == '\t' || argv[i][j] == '-'
-				|| argv[i][j] == '+')
-				j++;
-			else
-				return (0);
-		}
-		i++;
+		tmp = res * 10 + (*str - '0');
+		res = tmp;
+		if ((sign == -1 && res > 2147483648)
+			|| (sign == 1 && res > INT_MAX)
+			|| *str < '0' || *str > '9')
+			print_error(a);
+		str++;
 	}
-	return (1);
+	if (res == 0)
+		print_error(a);
+	return (sign * res);
 }
 
 void	check_dups(t_stack *stack)

@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 22:56:55 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/15 13:54:38 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:12:30 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	apply_instructions(t_stack **a)
 	t_stack	*b;
 
 	check_dups(*a);
-	stack_sorted(*a);
 	b = NULL;
 	str = get_next_line(0);
 	while (str)
@@ -73,37 +72,4 @@ int	ft_strcmp(const char *s1, const char *s2)
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-void	stack_sorted(t_stack *a)
-{
-	t_stack	*tmp;
-
-	tmp = a;
-	while (a->next != tmp)
-	{
-		if (a->data < a->next->data)
-			a = a->next;
-		else
-			return ;
-	}
-	free_stack(&a);
-	exit(EXIT_SUCCESS);
-}
-
-int	stack_size(t_stack *a)
-{
-	t_stack	*tmp;
-	int		i;
-
-	if (!a)
-		return (0);
-	i = 1;
-	tmp = a;
-	while (a->next != tmp)
-	{
-		i++;
-		a = a->next;
-	}
-	return (i);
 }

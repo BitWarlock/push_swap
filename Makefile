@@ -6,7 +6,7 @@
 #    By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/23 18:01:07 by mrezki            #+#    #+#              #
-#    Updated: 2024/04/08 02:05:34 by mrezki           ###   ########.fr        #
+#    Updated: 2024/04/24 18:13:28 by mrezki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,26 +34,28 @@ B_OBJS		= $(B_SRCS:.c=.o)
 all: $(EXEC)
 
 %.o: %.c $(HEADER) $(B_HEADER)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -c -o $@ $<
 
 $(LIBFT):
-	$(MAKE) -C $(LIB_DIR)
-	mv $(LIB_DIR)/$(LIBFT) .
+	@$(MAKE) -C $(LIB_DIR)
+	@mv $(LIB_DIR)/$(LIBFT) .
 
 
 $(EXEC): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $^ -o $@
+	@$(CC) $(CFLAGS) $^ -o $@
 
-bonus: $(B_OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $^ -o $(PROG)
+$(PROG): $(B_OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) $^ -o $@
+ 
+bonus: $(PROG)
 
 clean:
-	$(RM) $(OBJS) $(B_OBJS)
-	$(MAKE) -C libft/ clean
+	@$(RM) $(OBJS) $(B_OBJS)
+	@$(MAKE) -C libft/ clean
 
 fclean: clean
-	$(RM) $(LIBFT) $(EXEC) $(PROG) a.out .DS_Store
-	$(MAKE) -C libft/ fclean
+	@$(RM) $(LIBFT) $(EXEC) $(PROG) a.out .DS_Store
+	@$(MAKE) -C libft/ fclean
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 22:55:56 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/15 13:54:18 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:13:09 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int		max_in_stack(t_stack *a);
 
 void	check_dups(t_stack *stack);
 void	parse_args(int ac, char *av[], t_stack **a);
-int		check_args(int argc, char *argv[]);
 int		check_if_sorted(t_stack *a);
+int		_atoi(const char *str, t_stack **a);
 
 /* Sort */
 

@@ -6,7 +6,7 @@
 /*   By: mrezki <mrezki@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:12:52 by mrezki            #+#    #+#             */
-/*   Updated: 2024/04/15 13:54:51 by mrezki           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:12:44 by mrezki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,7 @@
 
 # include <stdlib.h>
 # include "../libft/libft.h"
-
-typedef struct s_stack
-{
-	struct s_stack	*next;
-	struct s_stack	*prev;
-	int				data;
-}			t_stack;
-void	display_list(t_stack *stack, char c);
+# include "../srcs/push_swap.h"
 
 /* Instructions */
 
@@ -45,7 +38,6 @@ void	free_stack(t_stack **stack);
 void	add_to_stack(t_stack **stack, int data);
 void	add_to_top_stack(t_stack **a, int data);
 void	print_error(t_stack **a);
-void	stack_sorted(t_stack *a);
 void	index_stack(t_stack *a);
 void	apply_instructions(t_stack **a);
 void	check_line(char *str, t_stack **a, t_stack **b);
