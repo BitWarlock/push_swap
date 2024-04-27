@@ -18,7 +18,7 @@ void	sort_large_stack(t_stack **a, t_stack **b)
 
 	index_stack(*a);
 	if (stack_size(*a) > 100)
-		chunk_size = stack_size(*a) / 16;
+		chunk_size = stack_size(*a) / 15;
 	else
 		chunk_size = stack_size(*a) / 7;
 	if (stack_size(*a) == 6)

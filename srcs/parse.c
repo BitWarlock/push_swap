@@ -45,7 +45,10 @@ void	init_vars(long *res, long *tmp, int *sign)
 
 int	check_if_zero(const char *str)
 {
-	if ((str[0] == '-' || str[0] == '+'))
+	if ((str[0] == '-' || str[0] == '+')
+		&& str[1] == '\0')
+		print_error(NULL);
+	else if ((str[0] == '-' || str[0] == '+'))
 		str++;
 	while (*str == ' ' || *str == '0' || *str == '\t')
 		str++;

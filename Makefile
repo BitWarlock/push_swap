@@ -34,28 +34,34 @@ B_OBJS		= $(B_SRCS:.c=.o)
 all: $(EXEC)
 
 %.o: %.c $(HEADER) $(B_HEADER)
-	@$(CC) $(CFLAGS) -c -o $@ $<
+	@echo "\033[1;33m"
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(LIBFT):
-	@$(MAKE) -C $(LIB_DIR)
-	@mv $(LIB_DIR)/$(LIBFT) .
+	$(MAKE) -C $(LIB_DIR)
+	mv $(LIB_DIR)/$(LIBFT) .
 
 
 $(EXEC): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
+	@echo "\n\n\033[1;36mDone."
 
 $(PROG): $(B_OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
+	@echo "\n\n\033[1;36mDone."
  
 bonus: $(PROG)
 
 clean:
-	@$(RM) $(OBJS) $(B_OBJS)
-	@$(MAKE) -C libft/ clean
+	@echo "\033[1;31m"
+	$(RM) $(OBJS) $(B_OBJS)
+	$(MAKE) -C libft/ clean
+	@echo "\n\033[1;31mCleanup Completed.\n"
 
 fclean: clean
-	@$(RM) $(LIBFT) $(EXEC) $(PROG) a.out .DS_Store
-	@$(MAKE) -C libft/ fclean
+	$(RM) $(LIBFT) $(EXEC) $(PROG) a.out .DS_Store
+	$(MAKE) -C libft/ fclean
+	@echo "\n\033[1;31mFull Cleanup Completed.\n"
 
 re: fclean all
 
